@@ -22,48 +22,95 @@
 ********************************************************************************************/
 
 #include "raylib.h"
+#include "myMath.h"
+#include "entity.h"
+
+
+
+
+
+//Declaring an enum so I can use a switch-case in main for what to render ont he screen.
+typedef enum GameScreen { TITLE = 0, GAMEPLAY, GAMEOVER, ENDING } GameScreen;
+
 
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
 int main(void)
 {
-    // Initialization
-    //--------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+	// Initialization
+	//--------------------------------------------------------------------------------------
+	const int screenWidth = 800;
+	const int screenHeight = 440;
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
+	GameScreen currentScreen = TITLE;
+	Entity player;
 
-    // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
-    {
-        // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
+	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+	//--------------------------------------------------------------------------------------
 
-        // Draw
-        //----------------------------------------------------------------------------------
-        BeginDrawing();
+	// Main game loop
+	while (!WindowShouldClose())    // Detect window close button or ESC key
+	{
+		//IMPLEMENTING SWITCH CASE FOR MAIN MENU, GAME AND GAME OVER SCREEN
 
-        ClearBackground(BLACK);
+		switch (currentScreen)
+		{
+		case TITLE:
+			BeginDrawing();
 
-        DrawText("Welcome! You are about to play a shitty game by team 7.", 100, 200, 20, RAYWHITE);
-        DrawText("Press a key to get to next screen.", 100, 300, 10, RAYWHITE);
+			ClearBackground(BLACK);
+
+			DrawText("Welcome! You are about to play a shitty game by team 7.", 100, 200, 20, RAYWHITE);
+			DrawText("Press a key to get to next screen.", 100, 300, 10, RAYWHITE);
 
 
-        EndDrawing();
-        //----------------------------------------------------------------------------------
-    }
+			EndDrawing();
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    CloseWindow();        // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+			if (IsKeyPressed(KEY_SPACE)) { currentScreen = GAMEPLAY; }
+			break;
+		case GAMEPLAY:
+			
+			BeginDrawing();
 
-    return 0;
+			ClearBackground(BLACK);
+
+				// Update
+				//----------------------------------------------------------------------------------
+				// TODO: Update your variables here
+			
+				//----------------------------------------------------------------------------------
+
+				// Draw
+				//----------------------------------------------------------------------------------
+			DrawRectangle(0, 0, 40, 40, SKYBLUE);
+			DrawRectangle(40, 0, 40, 40, DARKGREEN);
+			DrawRectangle(40, 40, 40, 40, SKYBLUE);
+			DrawRectangle(0, 40, 40, 40, DARKGREEN);
+			DrawCircle(player.posOffset.x, player.posOffset.y, player.rsize, RAYWHITE);
+
+				
+
+				//----------------------------------------------------------------------------------
+
+				EndDrawing();
+
+			break;
+		case GAMEOVER:
+			break;
+		case ENDING:
+			break;
+
+		}
+
+	}
+
+	// De-Initialization
+	//--------------------------------------------------------------------------------------
+	CloseWindow();        // Close window and OpenGL context
+	//--------------------------------------------------------------------------------------
+
+	return 0;
 }
