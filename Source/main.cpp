@@ -50,9 +50,11 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-        ClearBackground(RAYWHITE);
+        ClearBackground(BLACK);
 
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+        DrawText("Welcome! You are about to play a shitty game by team 7.", 100, 200, 20, RAYWHITE);
+        DrawText("Press a key to get to next screen.", 100, 300, 10, RAYWHITE);
+
 
         EndDrawing();
         //----------------------------------------------------------------------------------
