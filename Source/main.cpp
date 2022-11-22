@@ -26,7 +26,69 @@
 #include "entity.h"
 
 
+#include "raylib.h"
+#include <vector>
+#include "raymath.h"
 
+
+struct Level {
+	Vector2 PlayerPos;
+	std::vector<Vector2> Walls;
+	std::vector<Vector2> Boxes;
+	std::vector<Vector2> WinPoints;
+};
+
+
+bool OccupiedByBox(Vector2 Position, std::vector<Vector2>* BoxVector)
+{
+	for (int i = 0; i < (*BoxVector).size(); i++)
+	{
+		if (Vector2Equals((*BoxVector)[i], Position)) { return (true); }
+	}
+	return (false);
+}
+
+
+bool OccupiedByWall(Vector2 Position, std::vector<Vector2>* WallVector)
+{
+	for (int i = 0; i < (*WallVector).size(); i++)
+	{
+		if (Vector2Equals((*WallVector)[i], Position)) { return (true); }
+	}
+	return (false);
+}
+
+
+Vector2* GetBox(Vector2 Position, std::vector<Vector2>* BoxVector)
+{
+	for (int i = 0; i < (*BoxVector).size(); i++)
+	{
+		if (Vector2Equals((*BoxVector)[i], Position)) { return (&(*BoxVector)[i]); }
+	}
+	return (false);
+}
+
+
+void MovePlayer(Vector2 MovementVector, Level* MainLevel)
+{
+	//Vector2 FutureMovement = MainLevel->PlayerPos + MovementVector;
+	Vector2 FutureMovement = Vector2Add(MainLevel->PlayerPos, MovementVector);
+	if (OccupiedByBox(FutureMovement, &MainLevel->Boxes))
+	{
+		Vector2 FutureBoxMovement = Vector2Add(FutureMovement, MovementVector);
+		if (OccupiedByWall(FutureBoxMovement, &MainLevel->Boxes) == false)
+		{
+			Vector2* BoxToMove = GetBox(FutureBoxMovement, &MainLevel->Boxes);
+			BoxToMove->x = FutureBoxMovement.x;
+			BoxToMove->y = FutureBoxMovement.y;
+			MainLevel->PlayerPos = FutureMovement;
+		}
+	}
+	else if (OccupiedByWall(FutureMovement, &MainLevel->Walls) == false)
+	{
+		MainLevel->PlayerPos = FutureMovement;
+	}
+}
 
 
 //Declaring an enum so I can use a switch-case in main for what to render ont he screen.
