@@ -159,9 +159,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\entity.cpp" />
     <ClCompile Include="Source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\entity.h" />
+    <ClInclude Include="Source\level.h" />
     <ClInclude Include="Source\myMath.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
