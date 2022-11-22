@@ -1,5 +1,6 @@
 Group 7:
 Members:
+Jonathan Hedvall
 Adarsh Kumar
 Gustaf Styf
 
