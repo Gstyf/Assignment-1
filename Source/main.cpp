@@ -13,7 +13,7 @@ int main(void)
 	const int screenWidth = 800;
 	const int screenHeight = 440;
 
-	GameState GMMain = { GameScreen::TITLE, std::vector<Level> {Level{}}, 0 };
+	GameState GSMain = { GameScreen::TITLE, std::vector<Level> {Level{}}, 0 }; //PLayer is Entity 0
 
 	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
@@ -24,7 +24,7 @@ int main(void)
 	while (!WindowShouldClose())    
 		{
 
-		switch (GMMain.CurrentScreen)
+		switch (GSMain.CurrentScreen)
 			{
 			case GameScreen::TITLE:
 				{
@@ -38,7 +38,7 @@ int main(void)
 
 				EndDrawing();
 
-				if (IsKeyPressed(KEY_SPACE)) { GMMain.CurrentScreen = GameScreen::GAMEPLAY; }
+				if (IsKeyPressed(KEY_SPACE)) { GSMain.CurrentScreen = GameScreen::GAMEPLAY; }
 				
 				break;
 				}
@@ -46,7 +46,7 @@ int main(void)
 			case GameScreen::GAMEPLAY:
 				{
 				//Logic
-				MovePlayer(CreateMovementVector(), &GMMain.Levels[GMMain.CurrentLevel]);
+				MovePlayer(CreateMovementVector(), &GSMain.Levels[GSMain.CurrentLevel]);
 				
 
 				//Rendering
@@ -55,7 +55,7 @@ int main(void)
 				ClearBackground(BLACK);
 
 				//IMPLEMENT RENDERING HERE:
-				DrawCircle(GMMain.Levels[GMMain.CurrentLevel].PlayerPos.x * 64, GMMain.Levels[GMMain.CurrentLevel].PlayerPos.y * 64, 32, RAYWHITE);
+				DrawCircle(GSMain.Levels[GSMain.CurrentLevel].PlayerPos.x * 64, GSMain.Levels[GSMain.CurrentLevel].PlayerPos.y * 64, 32, RAYWHITE);
 
 				EndDrawing();
 
