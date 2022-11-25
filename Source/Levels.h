@@ -1,14 +1,19 @@
 #pragma once
 #include <vector>
 #include "myMath.h"
+#include "entity.h"
 
-struct Level {
-	Vector2i PlayerPos;
+struct Level
+{
+	std::vector<Entity> entities = {};
 	std::vector<Vector2i> Walls;
 	std::vector<Vector2i> Boxes;
 	std::vector<Vector2i> WinPoints;
-	};
 
+	void render();
+};
+
+//void Level::render();
 
 /*
 Level LevelTest{
