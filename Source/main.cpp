@@ -23,7 +23,7 @@
 * 
 ********************************************************************************************/
 
-//#include <vector>
+#include <vector>
 #include "myMath.h"
 
 #include "entity.h"
@@ -32,13 +32,12 @@
 #include "raymath.h"
 
 
-/*
 
 struct Level {
 	Vector2i PlayerPos;
-	//std::vector<Vector2i> Walls;
-	//std::vector<Vector2i> Boxes;
-	//std::vector<Vector2i> WinPoints;
+	std::vector<Vector2i> Walls;
+	std::vector<Vector2i> Boxes;
+	std::vector<Vector2i> WinPoints;
 	};
 
 
@@ -50,59 +49,59 @@ Vector2i CreateMovementVector()
 	}
 
 
-/*bool OccupiedByBox(Vector2i Position, std::vector<Vector2i>* BoxVector)
-{
-	for (int i = 0; i < (*BoxVector).size(); i++)
+bool OccupiedByBox(Vector2i Position, std::vector<Vector2i>* BoxVector)
 	{
+	for (int i = 0; i < (*BoxVector).size(); i++)
+		{
 		//if ((*BoxVector)[i] == Position) { return (true); }
-	}
+		}
 	return (false);
-}*/
+	}
 
 
-/*bool OccupiedByWall(Vector2i Position, std::vector<Vector2i>* WallVector)
-{
+bool OccupiedByWall(Vector2i Position, std::vector<Vector2i>* WallVector)
+	{
 	for (int i = 0; i < (*WallVector).size(); i++)
 	{
 		//if ((*WallVector)[i] == Position) { return (true); }
 	}
 	return (false);
-}*/
-
-
-/*Vector2i* GetBox(Vector2i Position, std::vector<Vector2i>* BoxVector)
-{
-	for (int i = 0; i < (*BoxVector).size(); i++)
-	{
-		//if ((*BoxVector)[i] == Position) { return (&(*BoxVector)[i]); }
 	}
+
+
+Vector2i* GetBox(Vector2i Position, std::vector<Vector2i>* BoxVector)
+	{
+		for (int i = 0; i < (*BoxVector).size(); i++)
+		{
+		//if ((*BoxVector)[i] == Position) { return (&(*BoxVector)[i]); }
+		}
 	return (nullptr);
-}
+	}
 
 
 void MovePlayer(Vector2i MovementVector, Level* MainLevel) //Implement bool return
-{
-	//Vector2 FutureMovement = MainLevel->PlayerPos + MovementVector;
-	Vector2i FutureMovement = MainLevel->PlayerPos + MovementVector;
-	/*if (OccupiedByBox(FutureMovement, &MainLevel->Boxes))
 	{
-		Vector2i FutureBoxMovement = FutureMovement + MovementVector;
-		if (OccupiedByWall(FutureBoxMovement, &MainLevel->Boxes) == false)
+		//Vector2 FutureMovement = MainLevel->PlayerPos + MovementVector;
+		Vector2i FutureMovement = MainLevel->PlayerPos + MovementVector;
+		/*if (OccupiedByBox(FutureMovement, &MainLevel->Boxes))
 		{
-			Vector2i* BoxToMove = GetBox(FutureBoxMovement, &MainLevel->Boxes);
-			BoxToMove->x = FutureBoxMovement.x;
-			BoxToMove->y = FutureBoxMovement.y;
-			MainLevel->PlayerPos = FutureMovement;
+			Vector2i FutureBoxMovement = FutureMovement + MovementVector;
+			if (OccupiedByWall(FutureBoxMovement, &MainLevel->Boxes) == false)
+			{
+				Vector2i* BoxToMove = GetBox(FutureBoxMovement, &MainLevel->Boxes);
+				BoxToMove->x = FutureBoxMovement.x;
+				BoxToMove->y = FutureBoxMovement.y;
+				MainLevel->PlayerPos = FutureMovement;
+			}
 		}
-	}
-	else if (OccupiedByWall(FutureMovement, &MainLevel->Walls) == false)
-	{
+		else if (OccupiedByWall(FutureMovement, &MainLevel->Walls) == false)
+		{
+			MainLevel->PlayerPos = FutureMovement;
+		}*/
 		MainLevel->PlayerPos = FutureMovement;
 	}
-	MainLevel->PlayerPos = FutureMovement;
-}
 
-*/
+
 
 //Declaring an enum so I can use a switch-case in main for what to render ont he screen.
 typedef enum GameScreen { TITLE = 0, GAMEPLAY, GAMEOVER, ENDING } GameScreen;

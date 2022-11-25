@@ -21,6 +21,9 @@
     <ClCompile Include="Source\entity.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Logic.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\myMath.h">
