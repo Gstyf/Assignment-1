@@ -24,6 +24,7 @@
 ********************************************************************************************/
 
 #include "Logic.cpp"
+#include "Levels.cpp"
 
 #include "entity.h"
 
@@ -87,7 +88,7 @@ int main(void)
 
 			ClearBackground(BLACK);
 
-			//IMPLEMENT RENDERING HERE::
+			//IMPLEMENT RENDERING HERE:
 			DrawCircle(MainLevel.PlayerPos.x * 64, MainLevel.PlayerPos.y*64, 32, RAYWHITE);
 
 			EndDrawing();
