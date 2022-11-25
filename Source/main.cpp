@@ -23,8 +23,8 @@
 * 
 ********************************************************************************************/
 
-#include "Logic.cpp"
-#include "Levels.cpp"
+#include "Logic.h"
+#include "Levels.h"
 
 #include "entity.h"
 

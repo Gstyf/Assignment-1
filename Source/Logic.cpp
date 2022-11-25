@@ -1,9 +1,7 @@
 #include <vector>
 #include "myMath.h"
-#include "Levels.cpp"
+#include "Levels.h"
 
-
-//LOGIC.CPP
 
 Vector2i CreateMovementVector()
 	{
@@ -13,7 +11,7 @@ Vector2i CreateMovementVector()
 	}
 
 
-bool OccupiedByBox(Vector2i Position, std::vector<Vector2i>& BoxVector)
+bool OccupiedByBox(Vector2i Position, const std::vector<Vector2i>& BoxVector)
 	{
 	for (int i = 0; i < BoxVector.size(); i++)
 		{
@@ -23,7 +21,7 @@ bool OccupiedByBox(Vector2i Position, std::vector<Vector2i>& BoxVector)
 	}
 
 
-bool OccupiedByWall(Vector2i Position, std::vector<Vector2i>& WallVector)
+bool OccupiedByWall(Vector2i Position, const std::vector<Vector2i>& WallVector)
 	{
 	for (int i = 0; i < WallVector.size(); i++)
 		{
@@ -46,7 +44,7 @@ Vector2i* GetBox(Vector2i Position, std::vector<Vector2i>& BoxVector)
 void MovePlayer(Vector2i MovementVector, Level* MainLevel) 
 	{
 	Vector2i FutureMovement = MainLevel->PlayerPos + MovementVector;
-	if (OccupiedByBox(FutureMovement, MainLevel->Boxes))
+	if (OccupiedByBox(FutureMovement,  MainLevel->Boxes))
 	{
 		Vector2i FutureBoxMovement = FutureMovement + MovementVector;
 		if (OccupiedByWall(FutureBoxMovement, MainLevel->Boxes) == false)

@@ -18,10 +18,10 @@
     <ClCompile Include="Source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\entity.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Logic.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Levels.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,7 +32,10 @@
     <ClInclude Include="Source\entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\level.h">
+    <ClInclude Include="Source\Logic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Levels.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
