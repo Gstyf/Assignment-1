@@ -19,77 +19,88 @@
 *
 *   Copyright (c) 2013-2022 Ramon Santamaria (@raysan5)
 *
+*   Pass by const ref if not modify else pointer
+* 
 ********************************************************************************************/
 
-#include "raylib.h"
+#include <vector>
 #include "myMath.h"
+
 #include "entity.h"
 
-
 #include "raylib.h"
-#include <vector>
 #include "raymath.h"
 
 
+
 struct Level {
-	Vector2 PlayerPos;
-	std::vector<Vector2> Walls;
-	std::vector<Vector2> Boxes;
-	std::vector<Vector2> WinPoints;
-};
+	Vector2i PlayerPos;
+	std::vector<Vector2i> Walls;
+	std::vector<Vector2i> Boxes;
+	std::vector<Vector2i> WinPoints;
+	};
 
 
-bool OccupiedByBox(Vector2 Position, std::vector<Vector2>* BoxVector)
-{
-	for (int i = 0; i < (*BoxVector).size(); i++)
+Vector2i CreateMovementVector()
 	{
-		if (Vector2Equals((*BoxVector)[i], Position)) { return (true); }
+	int XMVM = IsKeyPressed(KEY_LEFT) - IsKeyPressed(KEY_RIGHT);
+	int YMVM = IsKeyPressed(KEY_UP) - IsKeyPressed(KEY_DOWN);
+	return Vector2i{ XMVM, YMVM };
 	}
+
+
+bool OccupiedByBox(Vector2i Position, std::vector<Vector2i>* BoxVector)
+	{
+	for (int i = 0; i < (*BoxVector).size(); i++)
+		{
+		//if ((*BoxVector)[i] == Position) { return (true); }
+		}
 	return (false);
-}
+	}
 
 
-bool OccupiedByWall(Vector2 Position, std::vector<Vector2>* WallVector)
-{
+bool OccupiedByWall(Vector2i Position, std::vector<Vector2i>* WallVector)
+	{
 	for (int i = 0; i < (*WallVector).size(); i++)
 	{
-		if (Vector2Equals((*WallVector)[i], Position)) { return (true); }
+		//if ((*WallVector)[i] == Position) { return (true); }
 	}
 	return (false);
-}
-
-
-Vector2* GetBox(Vector2 Position, std::vector<Vector2>* BoxVector)
-{
-	for (int i = 0; i < (*BoxVector).size(); i++)
-	{
-		if (Vector2Equals((*BoxVector)[i], Position)) { return (&(*BoxVector)[i]); }
 	}
-	return (false);
-}
 
 
-void MovePlayer(Vector2 MovementVector, Level* MainLevel)
-{
-	//Vector2 FutureMovement = MainLevel->PlayerPos + MovementVector;
-	Vector2 FutureMovement = Vector2Add(MainLevel->PlayerPos, MovementVector);
-	/*if (OccupiedByBox(FutureMovement, &MainLevel->Boxes))
+Vector2i* GetBox(Vector2i Position, std::vector<Vector2i>* BoxVector)
 	{
-		Vector2 FutureBoxMovement = Vector2Add(FutureMovement, MovementVector);
-		if (OccupiedByWall(FutureBoxMovement, &MainLevel->Boxes) == false)
+		for (int i = 0; i < (*BoxVector).size(); i++)
 		{
-			Vector2* BoxToMove = GetBox(FutureBoxMovement, &MainLevel->Boxes);
-			BoxToMove->x = FutureBoxMovement.x;
-			BoxToMove->y = FutureBoxMovement.y;
-			MainLevel->PlayerPos = FutureMovement;
+		//if ((*BoxVector)[i] == Position) { return (&(*BoxVector)[i]); }
 		}
+	return (nullptr);
 	}
-	else if (OccupiedByWall(FutureMovement, &MainLevel->Walls) == false)
+
+
+void MovePlayer(Vector2i MovementVector, Level* MainLevel) //Implement bool return
 	{
+		//Vector2 FutureMovement = MainLevel->PlayerPos + MovementVector;
+		Vector2i FutureMovement = MainLevel->PlayerPos + MovementVector;
+		/*if (OccupiedByBox(FutureMovement, &MainLevel->Boxes))
+		{
+			Vector2i FutureBoxMovement = FutureMovement + MovementVector;
+			if (OccupiedByWall(FutureBoxMovement, &MainLevel->Boxes) == false)
+			{
+				Vector2i* BoxToMove = GetBox(FutureBoxMovement, &MainLevel->Boxes);
+				BoxToMove->x = FutureBoxMovement.x;
+				BoxToMove->y = FutureBoxMovement.y;
+				MainLevel->PlayerPos = FutureMovement;
+			}
+		}
+		else if (OccupiedByWall(FutureMovement, &MainLevel->Walls) == false)
+		{
+			MainLevel->PlayerPos = FutureMovement;
+		}*/
 		MainLevel->PlayerPos = FutureMovement;
-	}*/
-	MainLevel->PlayerPos = FutureMovement;
-}
+	}
+
 
 
 //Declaring an enum so I can use a switch-case in main for what to render ont he screen.
@@ -99,6 +110,8 @@ typedef enum GameScreen { TITLE = 0, GAMEPLAY, GAMEOVER, ENDING } GameScreen;
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
+
+	
 int main(void)
 {
 	// Initialization
@@ -110,7 +123,7 @@ int main(void)
 
 	GameScreen currentScreen = TITLE;
 	Entity player;
-	Level level;
+	//Level level;
 
 	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 	//--------------------------------------------------------------------------------------
@@ -141,25 +154,14 @@ int main(void)
 
 			ClearBackground(BLACK);
 
-				// Update
-				//----------------------------------------------------------------------------------
-				// TODO: Update your variables here
-			
-				//----------------------------------------------------------------------------------
-
-				// Draw
-				//----------------------------------------------------------------------------------
 			/*DrawRectangle(0, 0, 40, 40, SKYBLUE);
 			DrawRectangle(40, 0, 40, 40, DARKGREEN);
 			DrawRectangle(40, 40, 40, 40, SKYBLUE);
 			DrawRectangle(0, 40, 40, 40, DARKGREEN);*/
-			DrawCircle(player.posOffset.x, player.posOffset.y, player.rsize, RAYWHITE);
+			//DrawCircle(player.posOffset.x, player.posOffset.y, player.rsize, RAYWHITE);
 
-				
 
-				//----------------------------------------------------------------------------------
-
-				EndDrawing();
+			EndDrawing();
 
 			break;
 		case GAMEOVER:
