@@ -43,7 +43,7 @@ Vector2i* GetBox(Vector2i Position, std::vector<Vector2i>& BoxVector)
 
 void MovePlayer(Vector2i MovementVector, Level* MainLevel) 
 	{
-	Vector2i FutureMovement = MainLevel->PlayerPos + MovementVector;
+	/*Vector2i FutureMovement = MainLevel->PlayerPos + MovementVector;
 	if (OccupiedByBox(FutureMovement,  MainLevel->Boxes))
 	{
 		Vector2i FutureBoxMovement = FutureMovement + MovementVector;
@@ -59,5 +59,5 @@ void MovePlayer(Vector2i MovementVector, Level* MainLevel)
 	{
 		MainLevel->PlayerPos = FutureMovement;
 	}
-	MainLevel->PlayerPos = FutureMovement;
+	MainLevel->PlayerPos = FutureMovement;*/
 	}

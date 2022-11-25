@@ -3,23 +3,28 @@
 #include "myMath.h"
 #include "entity.h"
 
+
 struct Level
 {
 	std::vector<Entity> entities = {};
-	std::vector<Vector2i> Walls;
-	std::vector<Vector2i> Boxes;
-	std::vector<Vector2i> WinPoints;
+	//std::vector<Vector2i> Walls;
+	//std::vector<Vector2i> Boxes;
+	//std::vector<Vector2i> WinPoints;
 
 	void render();
 };
 
 //void Level::render();
 
-/*
-Level LevelTest{
-	Vector2i {5,5}, //PlayerPos
-	std::vector<Vector2i> { Vector2i {2,2}, Vector2i {2,3}, Vector2i {3,2}, Vector2i {1,2}}, //Walls
-	std::vector<Vector2i> { Vector2i {6,6}}, //Boxes
-	std::vector<Vector2i> { Vector2i {4,4}} //WinPoints
-	};
-	*/
+
+Level LevelTest
+{
+	std::vector<Entity> {
+	Entity { Vector2i {5,5}, EntityType {EntityType::PLAYER} }, //PlayerPos
+	Entity { Vector2i {1,0}, EntityType {EntityType::WALL} }, //wall
+	Entity { Vector2i {2,0}, EntityType {EntityType::WALL} },
+	Entity { Vector2i {3,0}, EntityType {EntityType::WALL} },
+	Entity { Vector2i {3,3}, EntityType {EntityType::BOX} }, //box
+	Entity { Vector2i {4,4}, EntityType {EntityType::SWITCH} }, //switch
+	}
+};

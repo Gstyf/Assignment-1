@@ -13,11 +13,14 @@ int main(void)
 	const int screenWidth = 800;
 	const int screenHeight = 440;
 
+
 	GameState GSMain = { GameScreen::TITLE, std::vector<Level> {Level{}}, 0 }; //PLayer is Entity 0
+	GSMain.Levels.push_back(LevelTest);
 
 	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
-	SetTargetFPS(60);            
+	SetTargetFPS(60);       
+
 
 
 	// Main game loop
@@ -55,7 +58,7 @@ int main(void)
 				ClearBackground(BLACK);
 
 				//IMPLEMENT RENDERING HERE:
-				DrawCircle(GSMain.Levels[GSMain.CurrentLevel].PlayerPos.x * 64, GSMain.Levels[GSMain.CurrentLevel].PlayerPos.y * 64, 32, RAYWHITE);
+				GSMain.Levels[GSMain.CurrentLevel].render();
 
 				EndDrawing();
 

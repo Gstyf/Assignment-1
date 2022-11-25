@@ -13,11 +13,8 @@ enum class EntityType
 class Entity
 {
 public:
-	Vector2i position = { 0,0 };
+	Vector2i position;
 	EntityType entityType;
-	Vector2i posOffset = { 0, 0 };
-	Vector2i size = { 0, 0 };
-	int rsize = 10;
 };
 
 
