@@ -43,8 +43,8 @@ struct Level {
 
 Vector2i CreateMovementVector()
 	{
-	int XMVM = IsKeyPressed(KEY_LEFT) - IsKeyPressed(KEY_RIGHT);
-	int YMVM = IsKeyPressed(KEY_UP) - IsKeyPressed(KEY_DOWN);
+	int XMVM = IsKeyPressed(KEY_RIGHT) - IsKeyPressed(KEY_LEFT);
+	int YMVM = IsKeyPressed(KEY_DOWN) - IsKeyPressed(KEY_UP);
 	return Vector2i{ XMVM, YMVM };
 	}
 
@@ -123,7 +123,7 @@ int main(void)
 
 	GameScreen currentScreen = TITLE;
 	Entity player;
-	//Level level;
+	Level MainLevel{ Vector2i {0,0} };
 
 	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 	//--------------------------------------------------------------------------------------
@@ -160,6 +160,8 @@ int main(void)
 			DrawRectangle(0, 40, 40, 40, DARKGREEN);*/
 			//DrawCircle(player.posOffset.x, player.posOffset.y, player.rsize, RAYWHITE);
 
+			MovePlayer(CreateMovementVector(), &MainLevel);
+			DrawCircle(MainLevel.PlayerPos.x * 64, MainLevel.PlayerPos.y*64, 32, RAYWHITE);
 
 			EndDrawing();
 
