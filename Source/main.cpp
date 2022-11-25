@@ -73,7 +73,7 @@ void MovePlayer(Vector2 MovementVector, Level* MainLevel)
 {
 	//Vector2 FutureMovement = MainLevel->PlayerPos + MovementVector;
 	Vector2 FutureMovement = Vector2Add(MainLevel->PlayerPos, MovementVector);
-	if (OccupiedByBox(FutureMovement, &MainLevel->Boxes))
+	/*if (OccupiedByBox(FutureMovement, &MainLevel->Boxes))
 	{
 		Vector2 FutureBoxMovement = Vector2Add(FutureMovement, MovementVector);
 		if (OccupiedByWall(FutureBoxMovement, &MainLevel->Boxes) == false)
@@ -87,7 +87,8 @@ void MovePlayer(Vector2 MovementVector, Level* MainLevel)
 	else if (OccupiedByWall(FutureMovement, &MainLevel->Walls) == false)
 	{
 		MainLevel->PlayerPos = FutureMovement;
-	}
+	}*/
+	MainLevel->PlayerPos = FutureMovement;
 }
 
 
@@ -109,6 +110,7 @@ int main(void)
 
 	GameScreen currentScreen = TITLE;
 	Entity player;
+	Level level;
 
 	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 	//--------------------------------------------------------------------------------------
@@ -147,10 +149,10 @@ int main(void)
 
 				// Draw
 				//----------------------------------------------------------------------------------
-			DrawRectangle(0, 0, 40, 40, SKYBLUE);
+			/*DrawRectangle(0, 0, 40, 40, SKYBLUE);
 			DrawRectangle(40, 0, 40, 40, DARKGREEN);
 			DrawRectangle(40, 40, 40, 40, SKYBLUE);
-			DrawRectangle(0, 40, 40, 40, DARKGREEN);
+			DrawRectangle(0, 40, 40, 40, DARKGREEN);*/
 			DrawCircle(player.posOffset.x, player.posOffset.y, player.rsize, RAYWHITE);
 
 				
