@@ -57,11 +57,7 @@ int main(void)
 				ClearBackground(BLACK);
 
 				//IMPLEMENT RENDERING HERE:
-<<<<<<< HEAD
-				DrawCircle(GSMain.Levels[GSMain.CurrentLevel].entities[0].position.x * 64, GSMain.Levels[GSMain.CurrentLevel].entities[0].position.y * 64, 32, RAYWHITE);
-=======
 				GSMain.Levels[GSMain.CurrentLevel].render();
->>>>>>> 8b70d75a682e8b4ac76aff470ef1609073535d9a
 
 				EndDrawing();
 
