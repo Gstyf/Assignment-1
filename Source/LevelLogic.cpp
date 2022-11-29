@@ -3,7 +3,7 @@
 #include "myMath.h"
 
 
-Vector2i CreateMovementVector()
+Vector2i Level::CreateMovementVector()
 	{
 	int XMVM = IsKeyPressed(KEY_RIGHT) - IsKeyPressed(KEY_LEFT);
 	int YMVM = IsKeyPressed(KEY_DOWN) - IsKeyPressed(KEY_UP);
@@ -11,6 +11,12 @@ Vector2i CreateMovementVector()
 	}
 
 
+EntityType Level::OccupiedByEntity(Vector2i Position)
+	{
+	return (EntityType::NONE);
+	}
+
+/*
 bool OccupiedByBox(Vector2i Position)
 	{
 	for (int i = 0; i < BoxVector.size(); i++)
@@ -39,7 +45,7 @@ Vector2i* Level::GetBox(Vector2i Position)
 		}
 	return (nullptr);
 	}
-
+	*/
 
 void Level::MovePlayer(Vector2i MovementVector)
 	{

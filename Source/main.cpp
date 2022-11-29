@@ -6,6 +6,19 @@
 #include "raylib.h"
 #include "raymath.h"
 
+
+Level LevelTest
+	{
+		std::vector<Entity> {
+		Entity { Vector2i {5,5}, EntityType {EntityType::PLAYER} }, //PlayerPos
+		Entity { Vector2i {1,0}, EntityType {EntityType::WALL} }, //wall
+		Entity { Vector2i {2,0}, EntityType {EntityType::WALL} },
+		Entity { Vector2i {3,0}, EntityType {EntityType::WALL} },
+		Entity { Vector2i {3,3}, EntityType {EntityType::BOX} }, //box
+		Entity { Vector2i {4,4}, EntityType {EntityType::SWITCH} }, //switch
+		}
+	};
+
 	
 int main(void)
 	{
@@ -14,8 +27,7 @@ int main(void)
 	const int screenHeight = 440;
 
 
-	GameState GSMain = { GameScreen::TITLE, std::vector<Level> {Level{}}, 0 }; //PLayer is Entity 0
-	GSMain.Levels.push_back(LevelTest);
+	GameState GSMain = { GameScreen::TITLE, std::vector<Level> {LevelTest}, 0 }; //PLayer is Entity 0
 
 	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
@@ -48,7 +60,7 @@ int main(void)
 			case GameScreen::GAMEPLAY:
 				{
 				//Logic
-				MovePlayer(CreateMovementVector(), &GSMain.Levels[GSMain.CurrentLevel]);
+				GSMain.Levels[GSMain.CurrentLevel].update();
 				
 
 				//Rendering
