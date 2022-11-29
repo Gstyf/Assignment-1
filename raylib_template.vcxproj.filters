@@ -21,10 +21,10 @@
     <ClCompile Include="Source\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Levels.cpp">
+    <ClCompile Include="Source\LevelGraphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\LevelGraphics.cpp">
+    <ClCompile Include="Source\LevelLogic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

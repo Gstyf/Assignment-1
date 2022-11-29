@@ -6,14 +6,21 @@
 struct Level
 {
 	std::vector<Entity> entities = {};
-	std::vector<Vector2i> Walls;
-	std::vector<Vector2i> Boxes;
-	std::vector<Vector2i> WinPoints;
+
+	Vector2i CreateMovementVector();
+
+	bool OccupiedByBox(Vector2i Position);
+
+	bool OccupiedByWall(Vector2i Position);
+
+	Vector2i* GetBox(Vector2i Position);
+
+	void MovePlayer(Vector2i MovementVector);
 
 	void render();
+	void update();
 };
 
-//void Level::render();
 
 /*
 Level LevelTest{

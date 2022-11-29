@@ -160,8 +160,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\LevelGraphics.cpp" />
-    <ClCompile Include="Source\Levels.cpp" />
     <ClCompile Include="Source\Game.cpp" />
+    <ClCompile Include="Source\LevelLogic.cpp" />
     <ClCompile Include="Source\main.cpp" />
   </ItemGroup>
   <ItemGroup>

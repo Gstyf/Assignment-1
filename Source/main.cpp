@@ -23,7 +23,6 @@ int main(void)
 	// Main game loop
 	while (!WindowShouldClose())    
 		{
-
 		switch (GSMain.CurrentScreen)
 			{
 			case GameScreen::TITLE:
@@ -55,7 +54,7 @@ int main(void)
 				ClearBackground(BLACK);
 
 				//IMPLEMENT RENDERING HERE:
-				DrawCircle(GSMain.Levels[GSMain.CurrentLevel].PlayerPos.x * 64, GSMain.Levels[GSMain.CurrentLevel].PlayerPos.y * 64, 32, RAYWHITE);
+				DrawCircle(GSMain.Levels[GSMain.CurrentLevel].entities[0].position.x * 64, GSMain.Levels[GSMain.CurrentLevel].entities[0].position.y * 64, 32, RAYWHITE);
 
 				EndDrawing();
 
@@ -72,10 +71,9 @@ int main(void)
 				break;
 				}
 			}
-
 		}
 
-	CloseWindow();        // Close window and OpenGL context
+	CloseWindow(); // Close window and OpenGL context
 
 	return 0;
 	}
