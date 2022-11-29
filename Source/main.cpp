@@ -37,6 +37,7 @@ int main(void)
 	GSMain.gametextures.Wall = LoadTexture("./wall.png");
 	GSMain.gametextures.Box = LoadTexture("./box.png");
 	GSMain.gametextures.Player = LoadTexture("./player.png");
+	GSMain.gametextures.Switch = LoadTexture("./switch.png");
 
 	// Main game loop
 	try

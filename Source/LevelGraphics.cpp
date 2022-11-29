@@ -13,8 +13,8 @@ void Level::render(Textures & textures)
 		{
 		case EntityType::PLAYER:
 		{
-			DrawCircle(e.position.x*64 + 32, e.position.y*64 + 32, 10, RAYWHITE);
-			DrawTexture(textures.Player, e.position.x * 64 + 24, e.position.y * 64 + 24, RAYWHITE);
+			DrawRectangle(e.position.x*64, e.position.y*64, 32, 32, RAYWHITE);
+			DrawTexture(textures.Player, e.position.x * 64, e.position.y * 64, RAYWHITE);
 		}
 			break;
 		case EntityType::WALL:
@@ -26,13 +26,14 @@ void Level::render(Textures & textures)
 			break;
 		case EntityType::BOX:
 		{
-			DrawRectangle(e.position.x * 64 + 8, e.position.y * 64 + 8, 48, 48, BLUE);
-			DrawTexture(textures.Box, e.position.x * 64 + 8, e.position.y * 64 + 8, WHITE);
+			DrawRectangle(e.position.x * 64, e.position.y * 64, 48, 48, BLUE);
+			DrawTexture(textures.Box, e.position.x * 64, e.position.y * 64, WHITE);
 		} 
 			break;
 		case EntityType::SWITCH:
 		{
-			DrawCircle(e.position.x * 64 + 32, e.position.y * 64 + 32, 10, YELLOW);
+			DrawRectangle(e.position.x * 64, e.position.y * 64, 64, 64, YELLOW);
+			DrawTexture(textures.Switch,e.position.x * 64, e.position.y * 64, YELLOW);
 		}
 			break;
 		}
