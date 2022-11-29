@@ -24,6 +24,9 @@
     <ClInclude Include="Source\myMath.h">
       <Filter>HEADER</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Resources.h">
+      <Filter>HEADER</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CPP">

@@ -49,6 +49,7 @@ bool Level::MoveBox(Entity* Box, Vector2i MovementVector)
 
 			case (EntityType::SWITCH): //WIN
 				{
+				CONTINUE = true;
 				Box->position = Box->position + MovementVector;
 				return (true);
 				}
