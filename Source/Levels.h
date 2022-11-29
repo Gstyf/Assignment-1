@@ -2,6 +2,7 @@
 #include <vector>
 #include "myMath.h"
 #include "entity.h"
+#include "Resources.h"
 
 struct Level
 {
@@ -13,7 +14,7 @@ struct Level
 
 	void MovePlayer(Vector2i MovementVector);
 
-	void render();
+	void render(Textures& textures);
 	void update();
 };
 

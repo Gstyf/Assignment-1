@@ -31,9 +31,11 @@ int main(void)
 
 	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
-	SetTargetFPS(60);       
+	SetTargetFPS(60); 
 
-
+	GSMain.gametextures.Wall = LoadTexture("./wall.png");
+	GSMain.gametextures.Box = LoadTexture("./box.png");
+	GSMain.gametextures.Player = LoadTexture("./player.png");
 
 	// Main game loop
 	while (!WindowShouldClose())    
@@ -69,7 +71,7 @@ int main(void)
 				ClearBackground(BLACK);
 
 				//IMPLEMENT RENDERING HERE:
-				GSMain.Levels[GSMain.CurrentLevel].render();
+				GSMain.Levels[GSMain.CurrentLevel].render(GSMain.gametextures);
 
 				EndDrawing();
 
