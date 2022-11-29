@@ -80,6 +80,7 @@ int main(void)
 
 					//IMPLEMENT RENDERING HERE:
 					GSMain.Levels[GSMain.CurrentLevel].render(GSMain.gametextures);
+					DrawText("R TO RESET", 550, 400, 30, RAYWHITE);
 
 					EndDrawing();
 
@@ -97,7 +98,7 @@ int main(void)
 					{
 					ClearBackground(BLACK);
 
-					DrawText("YOU WIN", 100, 200, 100, RAYWHITE);
+					DrawText("YOU WIN", 200, 200, 100, RAYWHITE);
 
 					EndDrawing();
 					break;
