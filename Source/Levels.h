@@ -15,6 +15,8 @@ struct Level
 	bool ScoutMovement(Vector2i Position, Vector2i MovementVector);
 	void MovePlayer(Vector2i MovementVector);
 
+	bool CONTINUE;
+
 	void render(Textures& textures);
 	void update();
 };
