@@ -1,24 +1,11 @@
 #include "Game.h"
-#include "Levels.h"
+#include "Level.h"
 
 #include "entity.h"
 
 #include "raylib.h"
 #include "raymath.h"
 #include <iostream>
-
-
-Level LevelTest
-	{
-		std::vector<Entity> {
-		Entity { Vector2i {5,5}, EntityType {EntityType::PLAYER} }, //PlayerPos
-		Entity { Vector2i {1,0}, EntityType {EntityType::WALL} }, //wall
-		Entity { Vector2i {2,0}, EntityType {EntityType::WALL} },
-		Entity { Vector2i {3,0}, EntityType {EntityType::WALL} },
-		Entity { Vector2i {3,3}, EntityType {EntityType::BOX} }, //box
-		Entity { Vector2i {4,4}, EntityType {EntityType::SWITCH} }, //switch
-		}
-	};
 
 	
 int main(void)
@@ -27,16 +14,15 @@ int main(void)
 	const int screenWidth = 800;
 	const int screenHeight = 440;
 
+	Resources::LoadResources();
 
-	GameState GSMain = { GameScreen::TITLE, std::vector<Level> {LevelTest}, 0 }; //PLayer is Entity 0
+	GameState GSMain = { GameScreen::TITLE, 0}; //PLayer is Entity 0
+
+	Level CurrentLevel = Resources::Levels[GSMain.CurrentLevel]; //TEMPORARY
 
 	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
 	SetTargetFPS(60); 
-
-	GSMain.gametextures.Wall = LoadTexture("./wall.png");
-	GSMain.gametextures.Box = LoadTexture("./box.png");
-	GSMain.gametextures.Player = LoadTexture("./player.png");
 
 	// Main game loop
 	try
@@ -46,7 +32,7 @@ int main(void)
 			if (IsKeyPressed(KEY_R))
 				{
 				GSMain.CurrentScreen = GameScreen::GAMEPLAY;
-				GSMain.Levels[GSMain.CurrentLevel] = LevelTest;
+				CurrentLevel = Resources::Levels[GSMain.CurrentLevel];
 				}
 
 			switch (GSMain.CurrentScreen)
@@ -70,7 +56,7 @@ int main(void)
 				case GameScreen::GAMEPLAY:
 					{
 					//Logic
-					GSMain.Levels[GSMain.CurrentLevel].update();
+					Resources::Levels[GSMain.CurrentLevel].update();
 					
 
 					//Rendering
@@ -79,13 +65,13 @@ int main(void)
 					ClearBackground(BLACK);
 
 					//IMPLEMENT RENDERING HERE:
-					GSMain.Levels[GSMain.CurrentLevel].render(GSMain.gametextures);
+					Resources::Levels[GSMain.CurrentLevel].render();
 					DrawText("R TO RESET", 550, 400, 30, RAYWHITE);
 
 					EndDrawing();
 
 
-					if (GSMain.Levels[GSMain.CurrentLevel].CONTINUE) { GSMain.CurrentScreen = GameScreen::ENDING; }
+					if (Resources::Levels[GSMain.CurrentLevel].CONTINUE) { GSMain.CurrentScreen = GameScreen::ENDING; }
 					break;
 					}
 				

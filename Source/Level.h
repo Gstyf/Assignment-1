@@ -2,7 +2,7 @@
 #include <vector>
 #include "myMath.h"
 #include "entity.h"
-#include "Resources.h"
+
 
 struct Level
 {
@@ -17,7 +17,7 @@ struct Level
 
 	bool CONTINUE;
 
-	void render(Textures& textures);
+	void render();
 	void update();
 };
 
