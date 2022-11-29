@@ -22,9 +22,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\LevelGraphics.cpp">
+<<<<<<< HEAD
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\LevelLogic.cpp">
+=======
+>>>>>>> 8b70d75a682e8b4ac76aff470ef1609073535d9a
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
