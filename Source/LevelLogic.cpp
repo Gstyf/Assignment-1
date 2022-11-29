@@ -11,61 +11,88 @@ Vector2i Level::CreateMovementVector()
 	}
 
 
-EntityType Level::OccupiedByEntity(Vector2i Position)
+Entity* Level::GetEntityByPosition(Vector2i Position)
 	{
-	return (EntityType::NONE);
-	}
+	Entity* EntityAtPosition = nullptr;
 
-/*
-bool OccupiedByBox(Vector2i Position)
-	{
-	for (int i = 0; i < BoxVector.size(); i++)
+	for (int i = 1; i < entities.size(); i++)
 		{
-		if (BoxVector[i] == Position) { return (true); }
+		if (entities[i].position == Position)
+			{
+			EntityAtPosition = &entities[i];
+			break;
+			}
 		}
-	return (false);
+
+	return (EntityAtPosition);
 	}
 
 
-bool OccupiedByWall(Vector2i Position)
+bool Level::MoveBox(Entity* Box, Vector2i MovementVector)
 	{
-	for (int i = 0; i < WallVector.size(); i++)
-		{
-		if (WallVector[i] == Position) { return (true); }
+	Entity* EntityAtPosition = GetEntityByPosition(Box->position + MovementVector);
+	
+	if (EntityAtPosition == nullptr) 
+		{ 
+		Box->position = Box->position + MovementVector;
+		return (true);
 		}
-	return (false);
+	else
+		{
+		switch (EntityAtPosition->entityType)
+			{
+			case (EntityType::WALL):
+			case (EntityType::BOX):
+				{
+				return (false);
+				}
+
+			case (EntityType::SWITCH): //WIN
+				{
+				Box->position = Box->position + MovementVector;
+				return (true);
+				}
+			}
+		}
+
+	throw(101);
 	}
 
 
-Vector2i* Level::GetBox(Vector2i Position)
+bool Level::ScoutMovement(Vector2i Position, Vector2i MovementVector)
 	{
-	for (int i = 0; i < BoxVector.size(); i++)
+	Entity* EntityAtPosition = GetEntityByPosition(Position);
+
+	if (EntityAtPosition == nullptr) { return(true); }
+	else
 		{
-		if (BoxVector[i] == Position) { return (&(BoxVector)[i]); }
+		switch (EntityAtPosition->entityType)
+			{
+			case (EntityType::SWITCH):
+				{
+				return (true);
+				}
+
+			case (EntityType::WALL):
+				{
+				return (false);
+				}
+
+			case (EntityType::BOX):
+				{
+				return (MoveBox(EntityAtPosition, MovementVector));
+				}
+			}
 		}
-	return (nullptr);
+
+	throw(101);
 	}
-	*/
+
 
 void Level::MovePlayer(Vector2i MovementVector)
 	{
 	Vector2i FutureMovement = entities[0].position + MovementVector;
-	/*if (OccupiedByBox(FutureMovement, MainLevel->Boxes))
-		{
-		Vector2i FutureBoxMovement = FutureMovement + MovementVector;
-		if (OccupiedByWall(FutureBoxMovement, MainLevel->Boxes) == false)
-			{
-			Vector2i* BoxToMove = GetBox(FutureBoxMovement, MainLevel->Boxes);
-			BoxToMove->x = FutureBoxMovement.x;
-			BoxToMove->y = FutureBoxMovement.y;
-			MainLevel->entities[0].position = FutureMovement;
-			}
-		}
-	else if (OccupiedByWall(FutureMovement, MainLevel->Walls) == false)
-		{
-		MainLevel->entities[0].position = FutureMovement;
-		}*/
-	entities[0].position = FutureMovement;
+	if (ScoutMovement(FutureMovement, MovementVector)) { entities[0].position = FutureMovement; }
 	}
 
 

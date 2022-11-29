@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Levels.h"
+#include <iostream>
 
 #include "entity.h"
 
@@ -27,7 +28,7 @@ int main(void)
 	const int screenHeight = 440;
 
 
-	GameState GSMain = { GameScreen::TITLE, std::vector<Level> {LevelTest}, 0 }; //PLayer is Entity 0
+	GameState GSMain = { GameScreen::GAMEPLAY, std::vector<Level> {LevelTest}, 0 }; //PLayer is Entity 0
 
 	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
@@ -36,59 +37,62 @@ int main(void)
 
 
 	// Main game loop
-	while (!WindowShouldClose())    
+	try 
 		{
-		switch (GSMain.CurrentScreen)
+		while (!WindowShouldClose())    
 			{
-			case GameScreen::TITLE:
+			switch (GSMain.CurrentScreen)
 				{
-				BeginDrawing();
+				case GameScreen::TITLE:
+					{
+					BeginDrawing();
 
-				ClearBackground(BLACK);
+					ClearBackground(BLACK);
 
-				DrawText("Welcome! You are about to play a shitty game by team 7.", 100, 200, 20, RAYWHITE);
-				DrawText("Press a key to get to next screen.", 100, 300, 10, RAYWHITE);
+					DrawText("Welcome! You are about to play a shitty game by team 7.", 100, 200, 20, RAYWHITE);
+					DrawText("Press a key to get to next screen.", 100, 300, 10, RAYWHITE);
 
 
-				EndDrawing();
+					EndDrawing();
 
-				if (IsKeyPressed(KEY_SPACE)) { GSMain.CurrentScreen = GameScreen::GAMEPLAY; }
+					if (IsKeyPressed(KEY_SPACE)) { GSMain.CurrentScreen = GameScreen::GAMEPLAY; }
+					
+					break;
+					}
+
+				case GameScreen::GAMEPLAY:
+					{
+					//Logic
+					GSMain.Levels[GSMain.CurrentLevel].update();
+
+					//Rendering
+					BeginDrawing();
+					ClearBackground(BLACK);
+					//IMPLEMENT RENDERING HERE:
+					GSMain.Levels[GSMain.CurrentLevel].render();
+					EndDrawing();
+
+					break;
+					}
 				
-				break;
-				}
-
-			case GameScreen::GAMEPLAY:
-				{
-				//Logic
-				GSMain.Levels[GSMain.CurrentLevel].update();
+				case GameScreen::GAMEOVER:
+					{
+					break;
+					}
 				
-
-				//Rendering
-				BeginDrawing();
-
-				ClearBackground(BLACK);
-
-				//IMPLEMENT RENDERING HERE:
-				GSMain.Levels[GSMain.CurrentLevel].render();
-
-				EndDrawing();
-
-				break;
-				}
-			
-			case GameScreen::GAMEOVER:
-				{
-				break;
-				}
-			
-			case GameScreen::ENDING:
-				{
-				break;
+				case GameScreen::ENDING:
+					{
+					break;
+					}
 				}
 			}
 		}
+	catch (int ERRORID) //101 : NULLENTITY
+		{
+		std::cout << "ERROR CATCH: " << ERRORID;
+		}
 
-	CloseWindow(); // Close window and OpenGL context
 
+	CloseWindow();
 	return 0;
 	}
