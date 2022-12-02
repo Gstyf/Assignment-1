@@ -1,0 +1,3 @@
+resources/textures/player.png
+resources/textures/wall.png
+resources/textures/box.png

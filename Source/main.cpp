@@ -14,13 +14,13 @@ int main(void)
 	const int screenWidth = 800;
 	const int screenHeight = 440;
 
+	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+
 	Resources::LoadResources();
 
-	GameState GSMain = { GameScreen::TITLE, 0}; //PLayer is Entity 0
+	GameState GSMain = { GameScreen::TITLE, 0 }; //PLayer is Entity 0
 
 	Level CurrentLevel = Resources::Levels[GSMain.CurrentLevel]; //TEMPORARY
-
-	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
 	SetTargetFPS(60); 
 
@@ -71,7 +71,7 @@ int main(void)
 					EndDrawing();
 
 
-					if (Resources::Levels[GSMain.CurrentLevel].CONTINUE) { GSMain.CurrentScreen = GameScreen::ENDING; }
+					//if (Resources::Levels[GSMain.CurrentLevel].CONTINUE) { GSMain.CurrentScreen = GameScreen::ENDING; }
 					break;
 					}
 				

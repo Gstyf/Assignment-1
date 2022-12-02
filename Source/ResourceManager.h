@@ -4,7 +4,6 @@
 #include "raylib.h"
 
 #include <vector>
-#include <filesystem>
 #include <iostream>
 #include <fstream>
 #include <string>
