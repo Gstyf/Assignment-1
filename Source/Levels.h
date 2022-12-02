@@ -16,6 +16,7 @@ struct Level
 	void MovePlayer(Vector2i MovementVector);
 
 	bool CONTINUE;
+	int target = 0;
 
 	void render(Textures& textures);
 	void update();

@@ -13,7 +13,7 @@ void Level::render(Textures & textures)
 		{
 		case EntityType::PLAYER:
 		{
-			DrawRectangle(e.position.x*64, e.position.y*64, 32, 32, RAYWHITE);
+			//DrawRectangle(e.position.x*64 +10, e.position.y*64 +10 ,10, 10, RAYWHITE);
 			DrawTexture(textures.Player, e.position.x * 64, e.position.y * 64, RAYWHITE);
 		}
 			break;
@@ -26,7 +26,7 @@ void Level::render(Textures & textures)
 			break;
 		case EntityType::BOX:
 		{
-			DrawRectangle(e.position.x * 64, e.position.y * 64, 48, 48, BLUE);
+			//DrawRectangle(e.position.x * 64, e.position.y * 64, 48, 48, BLUE);
 			DrawTexture(textures.Box, e.position.x * 64, e.position.y * 64, WHITE);
 		} 
 			break;
