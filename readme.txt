@@ -4,7 +4,7 @@ Jonathan Hedvall
 Adarsh Kumar
 Gustaf Styf
 
-Instruction:
+Instructions:
 	--- ADD ASAP ---
 
 Git Repositiory:
