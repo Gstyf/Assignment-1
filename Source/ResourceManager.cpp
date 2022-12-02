@@ -14,9 +14,9 @@ int GetMultiDecimalIntFromString(int& Iterator, std::string String)
 		{
 		StringToConvert += String[Iterator];
 		Iterator++;
-		if (Iterator <= String.size()) { break; }
+		if (Iterator >= String.size()) { break; }
 		}
-
+	
 	return (stoi(StringToConvert));
 	}
 
