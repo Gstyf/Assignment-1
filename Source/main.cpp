@@ -20,7 +20,7 @@ int main(void)
 
 	GameState GSMain = { GameScreen::TITLE, 0 }; //PLayer is Entity 0
 
-	Level CurrentLevel = Resources::Levels[GSMain.CurrentLevel]; //TEMPORARY
+	Level CurrentLevel = Resources::Levels[GSMain.CurrentLevelIndex]; //TEMPORARY
 	CurrentLevel.ResetScore();
 
 	SetTargetFPS(60); 
@@ -32,9 +32,8 @@ int main(void)
 			{
 			if (IsKeyPressed(KEY_R))
 				{
-				std::cout << "GOTHERE";
 				GSMain.CurrentScreen = GameScreen::GAMEPLAY;
-				CurrentLevel = Resources::Levels[GSMain.CurrentLevel];
+				CurrentLevel = Resources::Levels[GSMain.CurrentLevelIndex];
 				CurrentLevel.ResetScore();
 				}
 
@@ -88,7 +87,18 @@ int main(void)
 					ClearBackground(BLACK);
 
 					DrawText("YOU WIN", 200, 200, 100, RAYWHITE);
+					DrawText("PRESS SPACE FOR NEXT LEVEL", 170, 300, 30, RAYWHITE);
 
+					if (IsKeyPressed(KEY_SPACE)) 
+						{ 
+						GSMain.CurrentScreen = GameScreen::GAMEPLAY;
+					 	//int LevelCount = Resources::Levels.size();
+						if (GSMain.CurrentLevelIndex >= Resources::Levels.size() - 1) { GSMain.CurrentLevelIndex = 0; }
+						else { GSMain.CurrentLevelIndex++; }
+						CurrentLevel = Resources::Levels[GSMain.CurrentLevelIndex];
+						CurrentLevel.ResetScore();
+						}
+					
 					EndDrawing();
 					break;
 					}

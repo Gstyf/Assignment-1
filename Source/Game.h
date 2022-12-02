@@ -7,7 +7,7 @@ enum struct GameScreen { TITLE = 0, GAMEPLAY, GAMEOVER, ENDING };
 
 struct GameState {
 	GameScreen CurrentScreen;
-	int CurrentLevel;
+	int CurrentLevelIndex;
 	};
 
 
