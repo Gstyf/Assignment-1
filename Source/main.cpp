@@ -11,8 +11,8 @@
 int main(void)
 	{
 	// Initialization
-	const int screenWidth = 800;
-	const int screenHeight = 440;
+	const int screenWidth = 896;
+	const int screenHeight = 512;
 
 	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
@@ -66,7 +66,7 @@ int main(void)
 
 					//IMPLEMENT RENDERING HERE:
 					Resources::Levels[GSMain.CurrentLevel].render();
-					DrawText("R TO RESET", 550, 400, 30, RAYWHITE);
+					DrawText("R TO RESET", 680, 20, 30, RAYWHITE);
 
 					EndDrawing();
 
