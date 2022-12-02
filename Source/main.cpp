@@ -21,6 +21,7 @@ int main(void)
 	GameState GSMain = { GameScreen::TITLE, 0 }; //PLayer is Entity 0
 
 	Level CurrentLevel = Resources::Levels[GSMain.CurrentLevel]; //TEMPORARY
+	CurrentLevel.ResetScore();
 
 	SetTargetFPS(60); 
 
@@ -31,8 +32,10 @@ int main(void)
 			{
 			if (IsKeyPressed(KEY_R))
 				{
+				std::cout << "GOTHERE";
 				GSMain.CurrentScreen = GameScreen::GAMEPLAY;
 				CurrentLevel = Resources::Levels[GSMain.CurrentLevel];
+				CurrentLevel.ResetScore();
 				}
 
 			switch (GSMain.CurrentScreen)
@@ -56,7 +59,7 @@ int main(void)
 				case GameScreen::GAMEPLAY:
 					{
 					//Logic
-					Resources::Levels[GSMain.CurrentLevel].update();
+					CurrentLevel.update();
 					
 
 					//Rendering
@@ -65,13 +68,13 @@ int main(void)
 					ClearBackground(BLACK);
 
 					//IMPLEMENT RENDERING HERE:
-					Resources::Levels[GSMain.CurrentLevel].render();
+					CurrentLevel.render();
 					DrawText("R TO RESET", 680, 20, 30, RAYWHITE);
 
 					EndDrawing();
 
-
-					//if (Resources::Levels[GSMain.CurrentLevel].CONTINUE) { GSMain.CurrentScreen = GameScreen::ENDING; }
+					//std::cout << CurrentLevel.CurrentScore << "\n";
+					if (CurrentLevel.CurrentScore >= CurrentLevel.RequiredScore) { GSMain.CurrentScreen = GameScreen::ENDING; }
 					break;
 					}
 				
