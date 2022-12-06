@@ -10,6 +10,9 @@
     <ClCompile Include="Source\LevelGraphics.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ResourceManager.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\entity.h">
@@ -18,13 +21,13 @@
     <ClInclude Include="Source\Game.h">
       <Filter>HEADER</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Levels.h">
+    <ClInclude Include="Source\Level.h">
       <Filter>HEADER</Filter>
     </ClInclude>
     <ClInclude Include="Source\myMath.h">
       <Filter>HEADER</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Resources.h">
+    <ClInclude Include="Source\ResourceManager.h">
       <Filter>HEADER</Filter>
     </ClInclude>
   </ItemGroup>

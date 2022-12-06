@@ -1,19 +1,13 @@
 #pragma once
 #include <vector>
-#include "Levels.h"
-#include "Resources.h"
+#include "Level.h"
+#include "ResourceManager.h"
 
 enum struct GameScreen { TITLE = 0, GAMEPLAY, GAMEOVER, ENDING };
 
-
-
 struct GameState {
 	GameScreen CurrentScreen;
-	std::vector<Level> Levels;
-	int CurrentLevel;
-
-	Textures gametextures;
-
+	int CurrentLevelIndex;
 	};
 
 

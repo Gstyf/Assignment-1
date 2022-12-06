@@ -1,6 +1,17 @@
 #include <vector>
-#include "Levels.h"
+#include "Level.h"
 #include "myMath.h"
+
+
+void Level::ResetScore()
+	{
+	CurrentScore = 0;
+	RequiredScore = 0;
+	for (int i = 0; i < entities.size(); i++)
+		{
+		if (entities[i].entityType == EntityType::SWITCH) { RequiredScore++; }
+		}
+	}
 
 
 Vector2i Level::CreateMovementVector()
@@ -8,6 +19,19 @@ Vector2i Level::CreateMovementVector()
 	int XMVM = IsKeyPressed(KEY_RIGHT) - IsKeyPressed(KEY_LEFT);
 	int YMVM = IsKeyPressed(KEY_DOWN) - IsKeyPressed(KEY_UP);
 	return Vector2i{ XMVM, YMVM };
+	}
+
+
+bool Level::IsEntityTypeAtPosition(Vector2i Position, EntityType Type)
+	{
+	for (int i = 1; i < entities.size(); i++)
+		{
+		if (entities[i].position == Position && entities[i].entityType == Type)
+			{
+			return (true);
+			}
+		}
+	return (false);
 	}
 
 
@@ -28,14 +52,14 @@ Entity* Level::GetEntityByPosition(Vector2i Position)
 	}
 
 
-
 bool Level::MoveBox(Entity* Box, Vector2i MovementVector)
 	{
-	Entity* EntityAtPosition = GetEntityByPosition(Box->position + MovementVector);
+	Vector2i FuturePosition = Box->position + MovementVector;
+	Entity* EntityAtPosition = GetEntityByPosition(FuturePosition);
 	
 	if (EntityAtPosition == nullptr) 
 		{ 
-		Box->position = Box->position + MovementVector;
+		Box->position = FuturePosition;
 		return (true);
 		}
 	else
@@ -50,18 +74,9 @@ bool Level::MoveBox(Entity* Box, Vector2i MovementVector)
 
 			case (EntityType::SWITCH): //WIN
 				{
-				
-				Box->position = Box->position + MovementVector;
-				target++;
-				
-
-				if (target == 3)
-				{
-				    CONTINUE = true;
-				}
-				return true;
-
-				
+				if (IsEntityTypeAtPosition(Box->position, EntityType::SWITCH) == false) { CurrentScore++; }
+				Box->position = FuturePosition;
+				return (true);
 				}
 			}
 		}
@@ -81,7 +96,8 @@ bool Level::ScoutMovement(Vector2i Position, Vector2i MovementVector)
 			{
 			case (EntityType::SWITCH):
 				{
-				return (true);
+				if (IsEntityTypeAtPosition(Position, EntityType::BOX)) { return (MoveBox(EntityAtPosition, MovementVector)); }
+				else { return (true); }
 				}
 
 			case (EntityType::WALL):
