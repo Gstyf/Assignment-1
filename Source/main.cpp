@@ -29,6 +29,8 @@ int main(void)
 		}
 	
 
+	//UNLOAD RESOURCESx
+
 	CloseWindow(); // Close window and OpenGL context
 	return 0;
 	}

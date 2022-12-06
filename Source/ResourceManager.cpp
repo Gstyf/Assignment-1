@@ -5,8 +5,10 @@ std::vector<Texture2D> Resources::Textures;
 
 //string u should be constexpr strings
 
-std::string TextureDirectory = "./Resources/Textures/Textures.txt";
-std::string LevelDirectory = "./Resources/Levels.txt";
+constexpr char TextureDirectory[] = "./Resources/Textures/Textures.txt";
+constexpr char LevelDirectory[] = "./Resources/Levels.txt";
+constexpr char SoundDirectory[] = "./Resources/Sounds/Sounds.txt";
+
 
 
 int GetMultiDecimalIntFromString(int& Iterator, std::string String)
@@ -80,6 +82,19 @@ void Resources::LoadResources()
 		Textures.push_back(TempTexture);
 		}
 	TextureFile.close();
+
+
+	//Load Textures
+	std::string ReadStringSOUND;
+	std::ifstream SoundFile{ SoundDirectory };
+
+	while (std::getline(TextureFile, ReadStringSOUND))
+		{
+		const char* ReadStringSOUNDchar = ReadStringSOUND.c_str();
+		Sound TempSOUND = LoadSound(ReadStringSOUNDchar);
+		Sounds.push_back(TempSOUND);
+		}
+	SoundFile.close();
 
 
 	//Load Levels

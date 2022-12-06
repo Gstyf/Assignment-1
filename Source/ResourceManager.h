@@ -12,6 +12,7 @@
 struct Resources {
 	static std::vector<Level> Levels;
 	static std::vector<Texture2D> Textures;
+	static std::vector<Sound> Sounds;
 
 	static void LoadResources();
 	};

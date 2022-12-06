@@ -107,6 +107,7 @@ bool Level::ScoutMovement(Vector2i Position, Vector2i MovementVector)
 
 			case (EntityType::BOX):
 				{
+				PlaySound(Resources::Sounds[0]);
 				return (MoveBox(EntityAtPosition, MovementVector));
 				}
 			}

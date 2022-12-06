@@ -7,10 +7,13 @@
     <ClCompile Include="Source\LevelLogic.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
-    <ClCompile Include="Source\LevelGraphics.cpp">
+    <ClCompile Include="Source\Graphics.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
     <ClCompile Include="Source\ResourceManager.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
   </ItemGroup>
