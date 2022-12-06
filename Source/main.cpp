@@ -18,7 +18,7 @@ int main(void)
 	SetTargetFPS(60);
 	
 
-	//GameLoop (Runs in Game.cpp
+	//Game Loop (Runs in Game.cpp)
 	try 
 		{
 		GMMain.UpdateGameLoop();
