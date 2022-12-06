@@ -2,18 +2,15 @@
 #include "myMath.h"
 #include "Level.h"
 #include "ResourceManager.h"
+#include "Game.h"
 
-void GameManager::RenderGraphis()
-Level CurrentLevel = Resources::Levels[GSMain.CurrentLevelIndex]; //TEMPORARY
-CurrentLevel.ResetScore();
+void GameManager::RenderGraphics()
+{
 
-	{
-
-	switch
-		case (GameScreen::Gameplay)
-	void render()
+	switch (CurrentGameState.CurrentScreen)
+		case (GameScreen::GAMEPLAY):
 		{
-		for (Entity& e : PassedLevel.entities)
+		for (Entity& e : CurrentGameState.CurrentLevel.entities)
 			{
 			switch (e.entityType)
 				{
@@ -41,5 +38,5 @@ CurrentLevel.ResetScore();
 				}
 			}
 		}
-	}
+}
 
