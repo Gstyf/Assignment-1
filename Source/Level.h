@@ -20,7 +20,6 @@ struct Level
 	int RequiredScore = 0;
 	int CurrentScore = 0;
 
-	void render();
 	void update();
 };
 

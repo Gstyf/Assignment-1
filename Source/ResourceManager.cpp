@@ -3,6 +3,8 @@
 std::vector<Level> Resources::Levels;
 std::vector<Texture2D> Resources::Textures;
 
+//string u should be constexpr strings
+
 std::string TextureDirectory = "./Resources/Textures/Textures.txt";
 std::string LevelDirectory = "./Resources/Levels.txt";
 
