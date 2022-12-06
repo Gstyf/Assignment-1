@@ -24,7 +24,7 @@ Connection overhaul
 int main(void)
 	{
 	// Initialization
-	GameManager GMMain = { 896, 512, GameState { GameScreen::TITLE, 0 } };
+	GameManager GMMain = { 896, 640, GameState { GameScreen::TITLE, 0 } };
 	
 	InitWindow(GMMain.WindowWidth, GMMain.WindowHeight, "raylib [core] example - basic window");
 	SetTargetFPS(60);
