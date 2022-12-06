@@ -1,6 +1,7 @@
 #include <vector>
 #include "Level.h"
 #include "myMath.h"
+#include "ResourceManager.h"
 
 
 void Level::ResetScore()
@@ -107,7 +108,7 @@ bool Level::ScoutMovement(Vector2i Position, Vector2i MovementVector)
 
 			case (EntityType::BOX):
 				{
-				PlaySound(Resources::Sounds[0]);
+				//PlaySound(Resources::Sounds[0]);
 				return (MoveBox(EntityAtPosition, MovementVector));
 				}
 			}

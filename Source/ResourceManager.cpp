@@ -2,8 +2,7 @@
 
 std::vector<Level> Resources::Levels;
 std::vector<Texture2D> Resources::Textures;
-
-//string u should be constexpr strings
+std::vector<Sound> Resources::Sounds;
 
 constexpr char TextureDirectory[] = "./Resources/Textures/Textures.txt";
 constexpr char LevelDirectory[] = "./Resources/Levels.txt";
@@ -71,6 +70,20 @@ Level ConstructLevelFromString(std::string String)
 
 void Resources::LoadResources()
 	{
+
+	//Load Sound
+	std::string ReadStringSOUND;
+	std::ifstream SoundFile{ SoundDirectory };
+
+	while (std::getline(SoundFile, ReadStringSOUND))
+		{
+		const char* ReadStringSOUNDchar = ReadStringSOUND.c_str();
+		Sound TempSOUND = LoadSound(ReadStringSOUNDchar);
+		Sounds.push_back(TempSOUND);
+		}
+	SoundFile.close();
+
+
 	//Load Textures
 	std::string ReadStringTEXTURE;
 	std::ifstream TextureFile {TextureDirectory};
@@ -82,19 +95,6 @@ void Resources::LoadResources()
 		Textures.push_back(TempTexture);
 		}
 	TextureFile.close();
-
-
-	//Load Textures
-	std::string ReadStringSOUND;
-	std::ifstream SoundFile{ SoundDirectory };
-
-	while (std::getline(TextureFile, ReadStringSOUND))
-		{
-		const char* ReadStringSOUNDchar = ReadStringSOUND.c_str();
-		Sound TempSOUND = LoadSound(ReadStringSOUNDchar);
-		Sounds.push_back(TempSOUND);
-		}
-	SoundFile.close();
 
 
 	//Load Levels
