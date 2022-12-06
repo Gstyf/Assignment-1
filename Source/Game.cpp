@@ -11,6 +11,21 @@ void GameManager::UpdateGameLoop() //Handles all scene and level logic and then 
 			if (IsKeyDown(KEY_SPACE)) 
 				{ 
 				CurrentGameState.CurrentScreen = GameScreen::GAMEPLAY;
+				CurrentGameState.CurrentLevel = Resources::Levels[CurrentGameState.CurrentLevelIndex];
+				CurrentGameState.CurrentLevel.ResetScore();
+				}
+			break;
+			}
+
+		case (GameScreen::ENDING):
+			{
+			if (IsKeyDown(KEY_SPACE))
+				{
+				if (CurrentGameState.CurrentLevelIndex >= Resources::Levels.size()) { CurrentGameState.CurrentLevelIndex = 0; }
+				else { CurrentGameState.CurrentLevelIndex++; }
+
+				CurrentGameState.CurrentScreen = GameScreen::GAMEPLAY;
+				CurrentGameState.CurrentLevel = Resources::Levels[CurrentGameState.CurrentLevelIndex];
 				CurrentGameState.CurrentLevel.ResetScore();
 				}
 			break;

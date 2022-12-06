@@ -7,6 +7,20 @@
 #include "raymath.h"
 #include <iostream>
 
+
+/*
+TODO JH
+
+Bugfix
+Unload resources
+Logic restructuring
+
+
+*/
+
+
+
+
 	
 int main(void)
 	{
@@ -29,7 +43,7 @@ int main(void)
 		}
 	
 
-	//UNLOAD RESOURCESx
+	//UNLOAD RESOURCES
 
 	CloseWindow(); // Close window and OpenGL context
 	return 0;
