@@ -2,6 +2,7 @@
 #include <vector>
 #include "myMath.h"
 #include "entity.h"
+#include "CONSTANTS.h"
 
 //Grid, construct a grid with two layers
 struct GridComponent {
@@ -47,6 +48,7 @@ struct Level
 	//Logic ver 2
 	bool MoveEntity(Vector2i MovementVector, int Xval, int Yval, bool CanPush);
 	bool CheckWin();
+	void ResetLevel();
 
 	Vector2i PlayerPosition;
 
