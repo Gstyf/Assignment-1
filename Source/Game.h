@@ -14,8 +14,6 @@ struct GameState {
 
 
 struct GameManager {
-	const int WindowWidth;
-	const int WindowHeight;
 	GameState CurrentGameState;
 
 	void UpdateGameLoop();

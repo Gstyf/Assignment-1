@@ -7,6 +7,8 @@
 struct Level
 {
 	std::vector<Entity> entities = {};
+	std::vector<Entity> EntitesLevel0 = {};
+	std::vector<Entity> EntitesLevel1 = {};
 
 	//LogicFunctions
 	void ResetScore();

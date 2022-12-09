@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Level.h"
+#include "CONSTANTS.h"
 
 #include "entity.h"
 
@@ -20,13 +21,13 @@ Connection overhaul
 
 */
 
-	
+
 int main(void)
 	{
 	// Initialization
-	GameManager GMMain = { 896, 640, GameState { GameScreen::TITLE, 0 } };
+	GameManager GMMain = { GameState { GameScreen::TITLE, 0 } };
 	
-	InitWindow(GMMain.WindowWidth, GMMain.WindowHeight, "raylib [core] example - basic window");
+	InitWindow(WINDOWWIDTH, WINDOWHEIGHT, "raylib [core] example - basic window");
 	SetTargetFPS(60);
 	
 	Resources::LoadResources();
