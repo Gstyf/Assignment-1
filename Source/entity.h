@@ -15,4 +15,5 @@ class Entity
 public:
 	Vector2i position;
 	EntityType entityType;
+	bool IsPlayer;
 	};

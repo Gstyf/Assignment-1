@@ -2,42 +2,50 @@
 #include "Level.h"
 #include "CONSTANTS.h"
 
-struct GridComponent { //Seperates the grid into two levels, Level 0 being objects that can be moved through
-	Entity Level0;
-	Entity Level1;
-	};
+//Grid
+GridComponent EntityGrid::GetAtPos(int XIndex, int YIndex)
+	{
+	return InternalArray[XIndex + YIndex * XTILECOUNT];
+	}
 
 
-struct EntityGrid { 
-private: 
-	GridComponent InternalArray[(XTILECOUNT * YTILECOUNT)]; //Create grid of size Xcells * Ycells
-
-public:
-	GridComponent GetAtPos(int XIndex, int YIndex)
-		{
-		return InternalArray[XIndex + YIndex * XTILECOUNT];
-		}
+void EntityGrid::SetEntityAtPos(int XIndex, int YIndex, Entity EntityToSet, int Layer)
+	{
+	InternalArray[XIndex + YIndex * XTILECOUNT].Layers[Layer] = EntityToSet;
+	}
 
 
-	void SetAtPos(int XIndex, int YIndex, GridComponent Value)
-		{
-		InternalArray[XIndex + YIndex * XTILECOUNT] = Value;
-		}
-
-
-	EntityGrid (std::vector<Entity> Level0Vector, std::vector<Entity> Level1Vector) 
-		{
-		
-		}
-	};
-
-
-
-void SetGridLevelToVector(int Level, std::vector<Entity> LevelVector, EntityGrid Grid)
+void EntityGrid::SetGridLayerToVector(int Layer, std::vector<Entity> LevelVector)
 	{
 	for (int i = 0; i < LevelVector.size(); i++)
 		{
 		Entity TempEntity = LevelVector[i];
-		Grid.SetAtPos(TempEntity.position.x, TempEntity.position.y, TempEntity.entityType);
+		this->SetEntityAtPos(TempEntity.position.x, TempEntity.position.y, TempEntity, Layer);
 		}
+	}
+
+
+//Movement
+Vector2i GetPlayerPositon()
+	{
+
+	}
+
+Vector2i Level::CreateMovementVector()
+	{
+	int XMVM = IsKeyPressed(KEY_RIGHT) - IsKeyPressed(KEY_LEFT);
+	int YMVM = IsKeyPressed(KEY_DOWN) - IsKeyPressed(KEY_UP);
+	return Vector2i{ XMVM, YMVM };
+	}
+
+
+void Update()
+	{
+
+	}
+
+
+void Level::ResetScore() //SHOULD BE RESETLEVEL LATER ON, ONLY THIS TO WORK
+	{
+
 	}
