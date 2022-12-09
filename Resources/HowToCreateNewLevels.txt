@@ -1,21 +1,34 @@
 When creating new levels here's what you should know,
 Levels are created by pushing entities with coordinates into the levels list's array of entities. The entities are created like this:
 
-1,2,3 2,3,4 3,4,5 
-
-They always come in three numbers separated by a comma with no spaces between.
-
-i,x,y 
+##############
+#ss#ss#      #
+#     b b   ##
+#bb#  # #####
+#  #  # #
+#p      #
+#########
+*
+##############
+#s s##      s#
+#   b   b#####
+# b #    #####
+#   #  p     #
+#            #
+#####  b  b  #
+    #s      s#
+    ##########
+*
 
 This is an easier way to read it.
+p = Player, w = Wall, b = Box, s = Switch, * = Next level
 
-i = What kind of entity it is: 1 = Player, 2 = Wall, 3 = Box, 4 = Switch
+Blank spaces,  as well as any non-aforementioned characters will count as an empty coordinate. New lines will move the y-coordinate down by one unit, and character at all will move the x-coordinate right one unit. 
 
-x = Where on the x axis it should be placed (this is multiplied by 64 in render)
-
-y = Where on the y axis it should be placed (this is multiplied by 64 in render)
-
+The editor will read the file in order, convert it to a string, and the interpret the characters in a switchcase for each character in the text document 'Levels.txt'. The program  will automatically stop adding trying to add levels when the .txt file runs out of character.
 
 ::IMPORTANT::
+Make sure you use an asterix (*) as the last character, otherwise it will not push your level into the game. :(
+
 The player should ALWAYS be the first entity entered.
 A new line means a new level. Whatever is entered first will be rendered first.

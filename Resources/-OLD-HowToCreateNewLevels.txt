@@ -1,0 +1,21 @@
+When creating new levels here's what you should know,
+Levels are created by pushing entities with coordinates into the levels list's array of entities. The entities are created like this:
+
+1,2,3 2,3,4 3,4,5 
+
+They always come in three numbers separated by a comma with no spaces between.
+
+i,x,y 
+
+This is an easier way to read it.
+
+i = What kind of entity it is: 1 = Player, 2 = Wall, 3 = Box, 4 = Switch
+
+x = Where on the x axis it should be placed (this is multiplied by 64 in render)
+
+y = Where on the y axis it should be placed (this is multiplied by 64 in render)
+
+
+::IMPORTANT::
+The player should ALWAYS be the first entity entered.
+A new line means a new level. Whatever is entered first will be rendered first.
