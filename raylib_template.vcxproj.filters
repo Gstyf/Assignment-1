@@ -16,6 +16,9 @@
     <ClCompile Include="Source\Game.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
+    <ClCompile Include="Source\NewLevelLogic.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\entity.h">
@@ -31,6 +34,9 @@
       <Filter>HEADER</Filter>
     </ClInclude>
     <ClInclude Include="Source\ResourceManager.h">
+      <Filter>HEADER</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CONSTANTS.h">
       <Filter>HEADER</Filter>
     </ClInclude>
   </ItemGroup>

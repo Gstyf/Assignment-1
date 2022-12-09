@@ -16,4 +16,6 @@ public:
 	Vector2i position;
 	EntityType entityType;
 	bool IsPlayer;
+	bool IsMovable;
+	bool IsSwitch;
 	};
