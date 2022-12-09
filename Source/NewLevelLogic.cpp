@@ -67,6 +67,7 @@ bool Level::MoveEntity(Vector2i MovementVector, int XVal, int YVal, bool CanPush
 		if (MoveEntity(MovementVector, XVal, YVal, false))
 			{
 			LevelGrid.SetEntityAtPos(XVal + MovementVector.x, YVal + MovementVector.y, LevelGrid.GetEntityAtPos(XVal, YVal, 1), 1);
+			LevelGrid.GetComponentAtPos(XVal, YVal)->Layers[1] = nullptr;
 			return (true);
 			}
 		else { return (false); }
@@ -77,20 +78,23 @@ bool Level::MoveEntity(Vector2i MovementVector, int XVal, int YVal, bool CanPush
 	}
 
 
-
-//Question: if check a index of a thing that has been moved is it nullptr?
-
-bool Level::CheckWin() //Check if there is a box at each switch
+bool Level::CheckWin() //Check if there is something at each switch, due to the fact that only boxes should move and be ontop of switches a specific search for them is unecessary
 	{
 	for (int i = 0; i < EntetiesLayer0.size(); i++)
 		{
-		if (EntetiesLayer0[i])
+		Entity TempEntity = EntetiesLayer0[i];
+		if (TempEntity.IsSwitch)
+			{
+			if (LevelGrid.GetEntityAtPos(TempEntity.position.x, TempEntity.position.y, 1) == nullptr) { return (false); }
+			}
 		}
+	return (true);
 	}
 
 
 void Level::Update2()
 	{
+	if (CheckWin()) {} //Have some type of event here
 	MoveEntity(CreateMovementVector(), PlayerPosition.x, PlayerPosition.y, true);
 	}
 
