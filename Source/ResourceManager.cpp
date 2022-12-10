@@ -1,29 +1,28 @@
 #include "ResourceManager.h"
-#include <fstream>
 
 std::vector<Level> Resources::Levels;
 std::vector<Texture2D> Resources::Textures;
 std::vector<Sound> Resources::Sounds;
 
-constexpr char TextureDirectory[] = "./Resources/Textures/Textures.txt";
-constexpr char LevelDirectory[] = "./Resources/Levels.txt";
-constexpr char SoundDirectory[] = "./Resources/Sounds/Sounds.txt";
 
+constexpr const char* TextureDirectory = "./Resources/Textures/Textures.txt";
+constexpr const char* LevelDirectory = "./Resources/Levels.txt";
+constexpr const char* SoundDirectory = "./Resources/Sounds/Sounds.txt";
 
+constexpr const char* EntityDescriptionFilePath = "./Resources/Entities.txt";
 
-//int GetMultiDecimalIntFromString(int& Iterator, std::string String)
-//	{
-//	std::string StringToConvert;
-//	while (isdigit(String.at(Iterator)))
-//		{
-//		StringToConvert += String[Iterator];
-//		Iterator++;
-//		if (Iterator >= String.size()) { break; }
-//		}
-//	
-//	return (stoi(StringToConvert));
-//	}
-
+int GetMultiDecimalIntFromString(int& Iterator, std::string String)
+	{
+	std::string StringToConvert;
+	while (isdigit(String.at(Iterator)))
+		{
+		StringToConvert += String[Iterator];
+		Iterator++;
+		if (Iterator >= String.size()) { break; }
+		}
+	
+	return (stoi(StringToConvert));
+	}
 
 //Level ConstructLevelFromString(std::string String)
 //{
@@ -96,6 +95,7 @@ void Resources::LoadResources()
 	}
 	TextureFile.close();
 
+	auto entity_descriptions = LoadFileText(EntityDescriptionFilePath);
 
 	//Load Levels
 	std::string level_creation = LoadFileText(LevelDirectory);
@@ -158,24 +158,7 @@ void Resources::LoadResources()
 		break;
 		case '*':
 		{
-			Levels.push_back(tLevel);
-			tLevel.entities.clear();
-			x = 0; y = -1;
-			break;
+		Levels.push_back(ConstructLevelFromString(ReadStringLEVEL));
 		}
-		break;
-		default:
-			x++;
-			break;
-		}
+	LevelFile.close();
 	}
-
-	//std::string ReadStringLEVEL;
-	//std::ifstream LevelFile{ LevelDirectory };
-
-	//while (std::getline(LevelFile, ReadStringLEVEL))
-	//{
-	//	Levels.push_back(ConstructLevelFromString(ReadStringLEVEL));
-	//}
-	//LevelFile.close();
-}

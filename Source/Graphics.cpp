@@ -5,6 +5,8 @@
 #include "Game.h"
 #include "CONSTANTS.h"
 
+#include "CONSTANTS.h"
+
 void GameManager::RenderGraphics()
 	{
 	BeginDrawing();
@@ -14,7 +16,11 @@ void GameManager::RenderGraphics()
 		{ 
 		case (GameScreen::ENDING):
 			{
+<<<<<<< Updated upstream
 			DrawText("YOU WIN", WINDOWWIDTH / 2 - 32 * 8, WINDOWHEIGHT / 2 - TILESIZE, 32, RAYWHITE);
+=======
+			DrawText("YOU WIN", WINDOWWIDTH / 2 - 32 * 8, WINDOWHEIGHT / 2 - 64, 32, RAYWHITE);
+>>>>>>> Stashed changes
 			DrawText("PRESS SPACE TO GO TO NEXT LEVEL", WINDOWWIDTH / 2 - 32 * 8, WINDOWHEIGHT / 2 - 32, 32, RAYWHITE);
 			break;
 			}

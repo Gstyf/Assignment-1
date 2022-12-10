@@ -1,0 +1,3 @@
+entity    {   flags   :   moveable   ;  char  : P  ;  texture : player;  }
+
+entity{char:#;flags:;texture:wall}

@@ -19,3 +19,10 @@ public:
 	bool IsMovable;
 	bool IsSwitch;
 	};
+
+struct EntityDescription
+{
+	bool Movable = false;                   // the properties of the entities
+	int Textures = {};
+
+};
