@@ -52,7 +52,7 @@ Entity* Level::GetEntityByPosition(Vector2i Position)
 	return (EntityAtPosition);
 	}
 
-
+//There is something really jank here. It moves switches instead of boxes depending of where the switch and box is on the map if there is an adjacent wall to either the left or above the box on a switch in question.
 bool Level::MoveBox(Entity* Box, Vector2i MovementVector)
 	{
 	Vector2i FuturePosition = Box->position + MovementVector;
@@ -72,17 +72,15 @@ bool Level::MoveBox(Entity* Box, Vector2i MovementVector)
 				{
 				return (false);
 				}
-
 			case (EntityType::SWITCH): //WIN
 				{
 				if (IsEntityTypeAtPosition(Box->position, EntityType::SWITCH) == false) { CurrentScore++; }
-				Box->position = FuturePosition;
+				Box->position = FuturePosition; 
 				return (true);
 				}
 			}
 		}
-
-	throw(101);
+	//throw(101); //Had to comment these out, since they were throwing errors if player was not entities[0] on each level preventing gameplay. Since this is not longer the standard these throws aren't necessary any longer.
 	}
 
 
@@ -100,12 +98,10 @@ bool Level::ScoutMovement(Vector2i Position, Vector2i MovementVector)
 				if (IsEntityTypeAtPosition(Position, EntityType::BOX)) { return (MoveBox(EntityAtPosition, MovementVector)); }
 				else { return (true); }
 				}
-
 			case (EntityType::WALL):
 				{
 				return (false);
 				}
-
 			case (EntityType::BOX):
 				{
 				//PlaySound(Resources::Sounds[0]);
@@ -113,19 +109,29 @@ bool Level::ScoutMovement(Vector2i Position, Vector2i MovementVector)
 				}
 			}
 		}
-
-	throw(101);
+	//throw(101);
 	}
 
 
 void Level::MovePlayer(Vector2i MovementVector)
 	{
-	Vector2i FutureMovement = entities[0].position + MovementVector;
-	if (ScoutMovement(FutureMovement, MovementVector)) { entities[0].position = FutureMovement; }
+	//I added this code to make sure that it goes throught he vector of entities in a level and only tries to move the one that is the player. It itirates through the list until it has a player for that level and moves only that one. Unfortunately this happens every time you move, so it isn't operation-efficient. This was an ugly fix to get the ball rolling. Sorry Johnathan!!
+	//
+	int i = 0;
+	for (; i < Level::entities.size(); i++)
+	{
+		if (Level::entities[i].IsPlayer == true)
+		{
+			break;
+		}
+	}
+	//
+	Vector2i FutureMovement = entities[i].position + MovementVector;
+	if (ScoutMovement(FutureMovement, MovementVector)) { entities[i].position = FutureMovement; }
 	}
 
 
 void Level::update()
 	{
-	MovePlayer(CreateMovementVector());
+		MovePlayer(CreateMovementVector());
 	}

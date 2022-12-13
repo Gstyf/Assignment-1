@@ -7,67 +7,11 @@ std::vector<Sound> Resources::Sounds;
 
 std::vector<EntityDescription> Resources::entitiesdesc;
 
-
 constexpr const char* TextureDirectory = "./Resources/Textures/Textures.txt";
 constexpr const char* LevelDirectory = "./Resources/Levels.txt";
 constexpr const char* SoundDirectory = "./Resources/Sounds/Sounds.txt";
 
 constexpr const char* EntityDescriptionFilePath = "./Resources/Entities.txt";
-
-int GetMultiDecimalIntFromString(int& Iterator, std::string String)
-	{
-	std::string StringToConvert;
-	while (isdigit(String.at(Iterator)))
-		{
-		StringToConvert += String[Iterator];
-		Iterator++;
-		if (Iterator >= String.size()) { break; }
-		}
-	
-	return (stoi(StringToConvert));
-	}
-
-Level ConstructLevelFromString(std::string String)
-{
-	Entity TempEntity;
-	Level TempLevel;
-	int i = 0, y = 0;
-	int Count = 0; // might not need this one
-
-	for (int i = 0; i < String.size();)
-		{
-		if (isdigit(String.at(i)))
-			{
-			switch (Count)
-				{
-				case (0):
-					{
-					TempEntity.entityType = static_cast<EntityType> (GetMultiDecimalIntFromString(i, String));
-					Count++;
-					break;
-					}
-
-				case (1):
-					{
-					TempEntity.position.x = GetMultiDecimalIntFromString(i, String);
-					Count++;
-					break;
-					}
-
-				case (2):
-					{
-					TempEntity.position.y = GetMultiDecimalIntFromString(i, String);
-					Count = 0;
-					TempLevel.entities.push_back(TempEntity);
-					TempEntity = Entity {};
-					break;
-					}
-				}
-			}
-		else { i++; }
-		}
-	return(TempLevel);
-}
 
 void eat_space(char** cursor)
 {
@@ -76,7 +20,6 @@ void eat_space(char** cursor)
 		(*cursor)++;
 	}
 };
-
 
 bool accept_string(char** cursors, const char* string)
 {
@@ -95,16 +38,16 @@ bool accept_string(char** cursors, const char* string)
 	return false;
 }
 
+/*
+	Code created by Adarsh
+*/
 void ParsEntityDescriptions(char* string)
 {
 	char* cursor = string;
-
 	EntityDescription desc;
-
 	while (true)
 	{
 		eat_space(&cursor);
-
 		if (accept_string(&cursor, "entity"))
 		{
 			eat_space(&cursor);
@@ -135,8 +78,6 @@ void ParsEntityDescriptions(char* string)
 							}
 						}
 					}
-
-
 					eat_space(&cursor);
 					if (accept_string(&cursor, "texture"))
 					{
@@ -166,7 +107,6 @@ void ParsEntityDescriptions(char* string)
 							}
 						}
 					}
-
 					eat_space(&cursor);
 					if (accept_string(&cursor, "char"))
 					{
@@ -174,7 +114,7 @@ void ParsEntityDescriptions(char* string)
 						if (accept_string(&cursor, ":"))
 						{
 							eat_space(&cursor);
-							desc.inlevelfile = *cursor;
+							desc.symbolInLevelFile = *cursor;
 							cursor++;
 
 							eat_space(&cursor);
@@ -185,11 +125,7 @@ void ParsEntityDescriptions(char* string)
 						}
 					}
 				}
-
-
 			}
-
-
 			Resources::entitiesdesc.push_back(desc);
 		}
 		else
@@ -197,17 +133,11 @@ void ParsEntityDescriptions(char* string)
 			break;
 		}
 	}
-
 	UnloadFileText(string);
 }
 
-
-
-
-
 void Resources::LoadResources()
 {
-
 	//Load Sound
 	std::string ReadStringSOUND;
 	std::ifstream SoundFile{ SoundDirectory };
@@ -219,7 +149,6 @@ void Resources::LoadResources()
 		Sounds.push_back(TempSOUND);
 	}
 	SoundFile.close();
-
 
 	//Load Textures
 	std::string ReadStringTEXTURE;
@@ -238,18 +167,20 @@ void Resources::LoadResources()
 	ParsEntityDescriptions(entity_descriptions);
 	
 
+	/*
+		Code created by Gustaf
+	*/
 	//Load Levels
 	std::string level_creation = LoadFileText(LevelDirectory);
 	Level tLevel;
-	Entity tEntity;
 	int x = 0, y = 0;
 	for (char& c : level_creation)
 	{
+		Entity tEntity;
 		switch (c)
 		{
-		case 'p':
+			case 'p':
 		{
-			//Entity tEntity;
 			tEntity.position = Vector2i(x, y);
 			tEntity.entityType = EntityType::PLAYER;
 			tEntity.IsPlayer = true;
@@ -259,8 +190,13 @@ void Resources::LoadResources()
 		}
 		case '#':
 		{
-			//Entity tEntity;
-			tEntity.position = Vector2i(x, y);
+			tEntity.position = Vector2i(x, y); for (auto& d : Resources::entitiesdesc)
+			{
+				if (d.symbolInLevelFile == '#')
+				{
+					tEntity.entityDescription = &d;
+				}
+			}
 			tEntity.entityType = EntityType::WALL;
 			tEntity.IsPlayer = false;
 			tLevel.entities.push_back(tEntity);
@@ -270,8 +206,14 @@ void Resources::LoadResources()
 		break;
 		case 'b':
 		{
-			//Entity tEntity;
 			tEntity.position = Vector2i(x, y);
+			for (auto& d : Resources::entitiesdesc)
+			{
+				if (d.symbolInLevelFile == 'b')
+				{
+					tEntity.entityDescription = &d;
+				}
+			}
 			tEntity.entityType = EntityType::BOX;
 			tEntity.IsPlayer = false;
 			tLevel.entities.push_back(tEntity);
@@ -281,8 +223,14 @@ void Resources::LoadResources()
 		break;
 		case 's':
 		{
-			//Entity tEntity;
 			tEntity.position = Vector2i(x, y);
+			for (auto& d : Resources::entitiesdesc)
+			{
+				if (d.symbolInLevelFile == 's')
+				{
+					tEntity.entityDescription = &d;
+				}
+			}
 			tEntity.entityType = EntityType::SWITCH;
 			tEntity.IsPlayer = false;
 			tLevel.entities.push_back(tEntity);
@@ -304,14 +252,9 @@ void Resources::LoadResources()
 			x = 0; y = -1;
 			break;
 		}
-
-
-		break;
 		default:
 			x++;
 			break;
 		}
 	}
 }
-
-

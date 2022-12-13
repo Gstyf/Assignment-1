@@ -29,6 +29,7 @@ int main(void)
 	
 	InitWindow(WINDOWWIDTH, WINDOWHEIGHT, "raylib [core] example - basic window");
 	SetTargetFPS(60);
+	InitAudioDevice();
 	
 	Resources::LoadResources();
 	//PlaySound(Resources::Sounds[0]);

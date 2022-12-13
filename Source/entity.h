@@ -1,6 +1,8 @@
 #pragma once
 #include "myMath.h"
-
+/*
+	Entity.h code created by Gustaf and modified by Adarsh and Jonathan
+*/
 enum class EntityType
 {
 	NONE = 0, //We shouldn't retrieve this.
@@ -10,20 +12,21 @@ enum class EntityType
 	SWITCH,
 };
 
-class Entity
-	{
-public:
-	Vector2i position;
-	EntityType entityType;
-	bool IsPlayer;
-	bool IsMovable;
-	bool IsSwitch;
-	};
-
 struct EntityDescription
 {
 	bool Movable = false;                   // the properties of the entities
 	int Textures = {};
-	char inlevelfile = 0;
-
+	char symbolInLevelFile = 0; // redundant??
 };
+
+class Entity
+	{
+public:
+	Vector2i position; //all entities have position, so this is not removable
+	EntityDescription* entityDescription; //This is the description that dictates if an object is movoable, and what texture it uses.
+	EntityType entityType; //get rid of?
+	bool IsPlayer; //player only
+	bool IsMovable; //box and player
+	bool IsSwitch; //switches are not going to be entities in the final version
+	};
+

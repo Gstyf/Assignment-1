@@ -29,7 +29,7 @@ struct Level
 	std::vector<Entity> EntetiesLayer0 = {};
 	std::vector<Entity> EntetiesLayer1 = {};
 	 
-	EntityGrid LevelGrid; //!!This relies on the std::vectors not chaning size!! ^
+	EntityGrid LevelGrid; //!!This relies on the std::vectors not changing size!! ^
 
 	//Logic
 	void ResetScore();
@@ -55,6 +55,6 @@ struct Level
 	void Update2();
 	};
 
-
-constexpr Entity NullEntity = { Vector2i {-1, -1}, EntityType {EntityType::NONE} };
+//This doesn't work since we added a pointer to the EntityDescription, get rid of it??
+//constexpr Entity NullEntity = { Vector2i {-1, -1}, EntityType {EntityType::NONE} };
 
