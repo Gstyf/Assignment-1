@@ -1,3 +1,12 @@
-entity    {   flags   :   moveable   ;  char  : P  ;  texture : player;  }
+entity{flags:movable;char:p;texture       
 
-entity{char:#;flags:;texture:wall}
+
+
+
+:player;}
+    
+entity { char: # ; flags: immovable; texture: wall; }
+
+entity { flags : movable ; char : b ; texture : box; }
+
+entity { flags : immovable ; char : s ; texture : switch ; }

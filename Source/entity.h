@@ -24,5 +24,6 @@ struct EntityDescription
 {
 	bool Movable = false;                   // the properties of the entities
 	int Textures = {};
+	char inlevelfile = 0;
 
 };

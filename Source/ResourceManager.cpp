@@ -1,8 +1,11 @@
 #include "ResourceManager.h"
 
+
 std::vector<Level> Resources::Levels;
 std::vector<Texture2D> Resources::Textures;
 std::vector<Sound> Resources::Sounds;
+
+std::vector<EntityDescription> Resources::entitiesdesc;
 
 
 constexpr const char* TextureDirectory = "./Resources/Textures/Textures.txt";
@@ -24,47 +27,182 @@ int GetMultiDecimalIntFromString(int& Iterator, std::string String)
 	return (stoi(StringToConvert));
 	}
 
-//Level ConstructLevelFromString(std::string String)
-//{
-//	Entity TempEntity;
-//	Level TempLevel;
-//	int i = 0, y = 0;
-//	int Count = 0; // might not need this one
-//
-//	for (int i = 0; i < String.size();)
-//		{
-//		if (isdigit(String.at(i)))
-//			{
-//			switch (Count)
-//				{
-//				case (0):
-//					{
-//					TempEntity.entityType = static_cast<EntityType> (GetMultiDecimalIntFromString(i, String));
-//					Count++;
-//					break;
-//					}
-//
-//				case (1):
-//					{
-//					TempEntity.position.x = GetMultiDecimalIntFromString(i, String);
-//					Count++;
-//					break;
-//					}
-//
-//				case (2):
-//					{
-//					TempEntity.position.y = GetMultiDecimalIntFromString(i, String);
-//					Count = 0;
-//					TempLevel.entities.push_back(TempEntity);
-//					TempEntity = Entity {};
-//					break;
-//					}
-//				}
-//			}
-//		else { i++; }
-//		}
-//	return(TempLevel);
-//}
+Level ConstructLevelFromString(std::string String)
+{
+	Entity TempEntity;
+	Level TempLevel;
+	int i = 0, y = 0;
+	int Count = 0; // might not need this one
+
+	for (int i = 0; i < String.size();)
+		{
+		if (isdigit(String.at(i)))
+			{
+			switch (Count)
+				{
+				case (0):
+					{
+					TempEntity.entityType = static_cast<EntityType> (GetMultiDecimalIntFromString(i, String));
+					Count++;
+					break;
+					}
+
+				case (1):
+					{
+					TempEntity.position.x = GetMultiDecimalIntFromString(i, String);
+					Count++;
+					break;
+					}
+
+				case (2):
+					{
+					TempEntity.position.y = GetMultiDecimalIntFromString(i, String);
+					Count = 0;
+					TempLevel.entities.push_back(TempEntity);
+					TempEntity = Entity {};
+					break;
+					}
+				}
+			}
+		else { i++; }
+		}
+	return(TempLevel);
+}
+
+void eat_space(char** cursor)
+{
+	while (**cursor != 0 && isspace((int) **cursor))
+	{
+		(*cursor)++;
+	}
+};
+
+
+bool accept_string(char** cursors, const char* string)
+{
+	char* c = *cursors;
+
+	for (;*c && *string && *c == *string; c++, string++)
+	{
+	}
+
+	if (*string == 0)
+	{
+		*cursors = c;
+		return true;
+	}
+
+	return false;
+}
+
+void ParsEntityDescriptions(char* string)
+{
+	char* cursor = string;
+
+	EntityDescription desc;
+
+	while (true)
+	{
+		eat_space(&cursor);
+
+		if (accept_string(&cursor, "entity"))
+		{
+			eat_space(&cursor);
+			if (accept_string(&cursor, "{"))
+			{
+				eat_space(&cursor);
+				while (!accept_string(&cursor, "}"))
+				{
+					eat_space(&cursor);
+					if (accept_string(&cursor, "flags"))
+					{
+						eat_space(&cursor);
+						if (accept_string(&cursor, ":"))
+						{
+							eat_space(&cursor);
+							while (!accept_string(&cursor, ";"))
+							{
+
+								eat_space(&cursor);
+								if (accept_string(&cursor, "movable"))
+								{
+									desc.Movable = true;
+								}
+								else if (accept_string(&cursor, "immovable"))
+								{
+									desc.Movable = false;
+								}
+							}
+						}
+					}
+
+
+					eat_space(&cursor);
+					if (accept_string(&cursor, "texture"))
+					{
+						eat_space(&cursor);
+						if (accept_string(&cursor, ":"))
+						{
+							eat_space(&cursor);
+							while (!accept_string(&cursor, ";"))
+							{
+								eat_space(&cursor);
+								if (accept_string(&cursor, "player"))
+								{
+									desc.Textures = 0;
+								}
+								else if (accept_string(&cursor, "wall"))
+								{
+									desc.Textures = 1;
+								}
+								else if (accept_string(&cursor, "box"))
+								{
+									desc.Textures = 2;
+								}
+								else if (accept_string(&cursor, "switch"))
+								{
+									desc.Textures = 3;
+								}
+							}
+						}
+					}
+
+					eat_space(&cursor);
+					if (accept_string(&cursor, "char"))
+					{
+						eat_space(&cursor);
+						if (accept_string(&cursor, ":"))
+						{
+							eat_space(&cursor);
+							desc.inlevelfile = *cursor;
+							cursor++;
+
+							eat_space(&cursor);
+							if(!accept_string(&cursor, ";"))
+							{
+								// BAD
+							}
+						}
+					}
+				}
+
+
+			}
+
+
+			Resources::entitiesdesc.push_back(desc);
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	UnloadFileText(string);
+}
+
+
+
 
 
 void Resources::LoadResources()
@@ -96,6 +234,9 @@ void Resources::LoadResources()
 	TextureFile.close();
 
 	auto entity_descriptions = LoadFileText(EntityDescriptionFilePath);
+
+	ParsEntityDescriptions(entity_descriptions);
+	
 
 	//Load Levels
 	std::string level_creation = LoadFileText(LevelDirectory);
@@ -158,7 +299,19 @@ void Resources::LoadResources()
 		break;
 		case '*':
 		{
-		Levels.push_back(ConstructLevelFromString(ReadStringLEVEL));
+			Levels.push_back(tLevel);
+			tLevel.entities.clear();
+			x = 0; y = -1;
+			break;
 		}
-	LevelFile.close();
+
+
+		break;
+		default:
+			x++;
+			break;
+		}
 	}
+}
+
+

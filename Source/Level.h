@@ -4,8 +4,6 @@
 #include "entity.h"
 #include "CONSTANTS.h"
 
-#include "CONSTANTS.h"
-
 //Grid, construct a grid with two layers
 struct GridComponent {
 	Entity* Layers[2];
