@@ -1,44 +1,48 @@
 #include "Game.h"
 
 
+void GameManager::InstanciateCurrentLevel()
+	{
+	CurrentGameState.CurrentLevel = Resources::Levels[CurrentGameState.CurrentLevelIndex];
+	CurrentGameState.CurrentLevel.ResetLevel();
+	}
+
+
 void GameManager::UpdateGameLoop() //Handles all scene and level logic and then calls the renderer
 	{
-	switch (CurrentGameState.CurrentScreen) //We should implement an eventsystem and thereby avoid this, for example how is the current level changed in the levelchanger?
+	switch (CurrentGameState.CurrentScreen) 
 		{
 		case (GameScreen::TITLE):
 			{
-			if (IsKeyDown(KEY_SPACE)) 
+			if (IsKeyDown(KEY_SPACE)) //When space is pressed start the game
 				{ 
 				CurrentGameState.CurrentScreen = GameScreen::GAMEPLAY;
-				CurrentGameState.CurrentLevel = Resources::Levels[CurrentGameState.CurrentLevelIndex];
-				CurrentGameState.CurrentLevel.ResetScore();
+				InstanciateCurrentLevel();
 				}
 			break;
 			}
 
 		case (GameScreen::ENDING):
 			{
-			if (IsKeyDown(KEY_SPACE))
+			if (IsKeyDown(KEY_SPACE)) //When space is pressed go to next level
 				{
 				if (CurrentGameState.CurrentLevelIndex >= Resources::Levels.size() - 1) { CurrentGameState.CurrentLevelIndex = 0; }
 				else { CurrentGameState.CurrentLevelIndex++; }
 
 				CurrentGameState.CurrentScreen = GameScreen::GAMEPLAY;
-				CurrentGameState.CurrentLevel = Resources::Levels[CurrentGameState.CurrentLevelIndex];
-				CurrentGameState.CurrentLevel.ResetScore();
+				InstanciateCurrentLevel();
 				}
 			break;
 			}
 		
 		case (GameScreen::GAMEPLAY):
 			{
-			if (IsKeyDown(KEY_A)) { CurrentGameState.CurrentScreen = GameScreen::ENDING; }
-			if (IsKeyDown(KEY_R)) {
-				CurrentGameState.CurrentLevel = Resources::Levels[CurrentGameState.CurrentLevelIndex];
-				CurrentGameState.CurrentLevel.ResetScore();
-			}
-			CurrentGameState.CurrentLevel.update();
-			if (CurrentGameState.CurrentLevel.CurrentScore >= CurrentGameState.CurrentLevel.RequiredScore) { CurrentGameState.CurrentScreen = GameScreen::ENDING; }
+			if (IsKeyDown(KEY_A)) { CurrentGameState.CurrentScreen = GameScreen::ENDING; } //Skip Level
+			if (IsKeyDown(KEY_R)) { InstanciateCurrentLevel(); } //Reload level
+			
+			CurrentGameState.CurrentLevel.Update();
+			
+			if (CurrentGameState.CurrentLevel.Win) { CurrentGameState.CurrentScreen = GameScreen::ENDING; } //Win
 			break;
 			}
 		}

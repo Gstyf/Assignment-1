@@ -1,15 +1,16 @@
 #include "ResourceManager.h"
 #include "Level.h"
+#include <assert.h>
 
 
-//Grid
+//Grid Managment
 int EntityGrid::TranslateTo1D(int XVal, int YVal) //Translates 2D coordinates into 1D ones
 	{
 	return (XVal + YVal * XTILECOUNT);
 	}
 
 
-Entity* EntityGrid::GetEntityAtPos(int XIndex, int YIndex, int Layer) //Gets an entity at a position by pointer
+Entity* EntityGrid::GetEntityAtPos(int XIndex, int YIndex, int Layer) //Gets an entity at a position by pointer, by using the layer array on a gridcomponent
 	{
 	return ((GetComponentAtPos(XIndex, YIndex)->Layers[Layer]));
 	}
@@ -17,7 +18,9 @@ Entity* EntityGrid::GetEntityAtPos(int XIndex, int YIndex, int Layer) //Gets an 
 
 GridComponent* EntityGrid::GetComponentAtPos(int XIndex, int YIndex) //Gets a gridcomponent at a position by pointer
 	{
-	return (&(InternalArray[TranslateTo1D(XIndex, YIndex)]));
+	int Index = TranslateTo1D(XIndex, YIndex);
+	GridComponent ComponentToReturn = InternalArray[Index];
+	return (&(ComponentToReturn));
 	}
 
 
@@ -29,78 +32,102 @@ void EntityGrid::SetEntityAtPos(int XIndex, int YIndex, Entity* EntityToSet, int
 	}
 
 
-void EntityGrid::SetGridLayerToVector(int Layer, std::vector<Entity> LevelVector) //Sets all the content of a vector to positions on a layer
+void EntityGrid::ClearEntityAtPos(int XIndex, int YIndex, int Layer) //Sets the entitypointer at an index to nullptr
+	{
+	InternalArray[TranslateTo1D(XIndex, YIndex)].Layers[Layer] = nullptr;
+	}
+
+
+void EntityGrid::SetGridLayerToVector(int Layer, std::vector<Entity>& LevelVector) //Sets all the content of a vector to positions on a layer
 	{
 	for (int i = 0; i < LevelVector.size(); i++)
 		{
 		Entity* TempEntity = &LevelVector[i];
 		InternalArray[TranslateTo1D(TempEntity->position.x, TempEntity->position.y)].Layers[Layer] = TempEntity;
+		std::cout << TranslateTo1D(TempEntity->position.x, TempEntity->position.y) << "\n";
 		}
 	}
 
 
-//Movement
-/*Vector2i Level::CreateMovementVector() //Get controls
+//Main Logic
+Vector2i Level::CreateMovementVector() //Get controls
 	{
 	int XMVM = IsKeyPressed(KEY_RIGHT) - IsKeyPressed(KEY_LEFT);
 	int YMVM = IsKeyPressed(KEY_DOWN) - IsKeyPressed(KEY_UP);
 	return Vector2i{ XMVM, YMVM };
-	}*/
+	}
 
 
-bool Level::MoveEntity(Vector2i MovementVector, int XVal, int YVal, bool CanPush) 
+void Level::CommitMovement(Vector2i& MovementVector, int& XVal, int& YVal) //Set future position to self then remove current position
 	{
-	Entity* FuturePosEntity = LevelGrid.GetEntityAtPos(XVal, YVal, 1);
+	Entity* EntityToSet = LevelGrid.GetEntityAtPos(XVal, YVal, 1);
+	LevelGrid.SetEntityAtPos(XVal + MovementVector.x, YVal + MovementVector.y, EntityToSet, 1);
+	LevelGrid.ClearEntityAtPos(XVal, YVal, 1);
+	}
+
+
+bool Level::MoveEntity(Vector2i& MovementVector, int XVal, int YVal, bool CanPush) //Reference fucks everything up, why? int& XVal
+	{
+	Entity* FuturePosEntity = LevelGrid.GetEntityAtPos(XVal + MovementVector.x, YVal + MovementVector.y, 1);
 	
 	if (FuturePosEntity == nullptr) //No entity 
 		{
-		LevelGrid.SetEntityAtPos(XVal + MovementVector.x, YVal + MovementVector.y, LevelGrid.GetEntityAtPos(XVal, YVal, 1), 1);
-		LevelGrid.GetComponentAtPos(XVal, YVal)->Layers[1] = nullptr;
+		CommitMovement(MovementVector, XVal, YVal);
 		return (true);
 		}
 		
-			
 	if (FuturePosEntity->IsMovable) //Movable entity
 		{
 		if (CanPush == false) { return (false); }
 
-		if (MoveEntity(MovementVector, XVal, YVal, false))
+		if (MoveEntity(MovementVector, FuturePosEntity->position.x, FuturePosEntity->position.y, false))
 			{
-			LevelGrid.SetEntityAtPos(XVal + MovementVector.x, YVal + MovementVector.y, LevelGrid.GetEntityAtPos(XVal, YVal, 1), 1);
-			LevelGrid.GetComponentAtPos(XVal, YVal)->Layers[1] = nullptr;
+			CommitMovement(MovementVector, XVal, YVal);
 			return (true);
 			}
 		else { return (false); }
 		}
 
-
+	//PlaySound(Resources::Sounds[0]);
 	return (false); //Unmovable entity
 	}
 
 
-bool Level::CheckWin() //Check if there is something at each switch, due to the fact that only boxes should move and be ontop of switches a specific search for them is unecessary
+bool Level::CheckWin() //Check if there is a box above each switch 
 	{
 	for (int i = 0; i < EntetiesLayer0.size(); i++)
 		{
-		Entity TempEntity = EntetiesLayer0[i];
+		Entity TempEntity = EntetiesLayer0[i]; 
 		if (TempEntity.IsSwitch)
 			{
-			if (LevelGrid.GetEntityAtPos(TempEntity.position.x, TempEntity.position.y, 1) == nullptr) { return (false); }
+			Entity* EntityToCheck = LevelGrid.GetEntityAtPos(TempEntity.position.x, TempEntity.position.y, 1);
+			if (EntityToCheck == nullptr) { return (false); }
+			if (EntityToCheck->IsBox == false) { return (false); }
 			}
 		}
 	return (true);
 	}
 
 
-void Level::Update2()
+void Level::Update() //Called each frame, main for logic
 	{
-	if (CheckWin()) {} //Have some type of event here
-	MoveEntity(CreateMovementVector(), PlayerPosition.x, PlayerPosition.y, true);
+	Vector2i MovementVector = CreateMovementVector();
+
+	if ((MovementVector.x != 0) || (MovementVector.y != 0))
+		{
+		if (MoveEntity(MovementVector, PlayerPosition.x, PlayerPosition.y, true))
+			{
+			PlayerPosition += MovementVector;
+			}
+
+		Win = CheckWin(); 
+		}
 	}
 
 
-void Level::ResetLevel() 
+void Level::ResetLevel() //Called at each instansiation of level
 	{
-	//LevelGrid.SetGridLayerToVector(0, EntitesLayer0); NO LOGIC IS APPLIED TO THE FIRST LAYER
+	Win = false;
+	LevelGrid.SetGridLayerToVector(0, EntetiesLayer0); 
 	LevelGrid.SetGridLayerToVector(1, EntetiesLayer1);
 	}

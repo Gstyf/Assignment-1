@@ -17,48 +17,46 @@ void GameManager::RenderGraphics()
 
 	switch (CurrentGameState.CurrentScreen)
 		{ 
-		case (GameScreen::ENDING):
+		case (GameScreen::ENDING): //Render Endingscreen
 			{
-			DrawText("YOU WIN", WINDOWWIDTH / 2 - 32 * 8, WINDOWHEIGHT / 2 - TILESIZE, 32, RAYWHITE);
-			DrawText("YOU WIN", WINDOWWIDTH / 2 - 32 * 8, WINDOWHEIGHT / 2 - 64, 32, RAYWHITE);
-			DrawText("PRESS SPACE TO GO TO NEXT LEVEL", WINDOWWIDTH / 2 - 32 * 8, WINDOWHEIGHT / 2 - 32, 32, RAYWHITE);
+			DrawText("YOU WIN", WINDOWWIDTH / 2 - TILESIZEDIV2 * 8, WINDOWHEIGHT / 2 - TILESIZE, TILESIZEDIV2, RAYWHITE);
+			DrawText("YOU WIN", WINDOWWIDTH / 2 - TILESIZEDIV2 * 8, WINDOWHEIGHT / 2 - TILESIZE, TILESIZEDIV2, RAYWHITE);
+			DrawText("PRESS SPACE TO GO TO NEXT LEVEL", WINDOWWIDTH / 2 - TILESIZEDIV2 * 8, WINDOWHEIGHT / 2 - TILESIZEDIV2, TILESIZEDIV2, RAYWHITE);
 			break;
 			}
 
-		case (GameScreen::TITLE):
+		case (GameScreen::TITLE): //Render Titlescreen
 			{
 			DrawText("PRESS SPACE TO START", WINDOWWIDTH / 2 - 32*6, WINDOWHEIGHT / 2 - 32, 32, RAYWHITE);
 			break;
 			}
 
-		case (GameScreen::GAMEPLAY):
+		case (GameScreen::GAMEPLAY): //Render "Game"
 			{
-			for (Entity& e : CurrentGameState.CurrentLevel.entities)
-				{
-				switch (e.entityType)
-					{
-					case EntityType::PLAYER:
-						{
-						DrawTexture(Resources::Textures[0], e.position.x * TILESIZE, e.position.y * TILESIZE, RAYWHITE);
-						}
-						break;
-					case EntityType::WALL:
-						{
+			std::vector<Entity> CurrentLayer = CurrentGameState.CurrentLevel.EntetiesLayer0;
 
-						DrawTexture(Resources::Textures[1], e.position.x * TILESIZE, e.position.y * TILESIZE, WHITE);
-						}
-						break;
-					case EntityType::BOX:
-						{
-						DrawTexture(Resources::Textures[2], e.position.x * TILESIZE, e.position.y * TILESIZE, WHITE);
-						}
-						break;
-					case EntityType::SWITCH:
-						{
-						DrawTexture(Resources::Textures[3], e.position.x * TILESIZE, e.position.y * TILESIZE, WHITE);
-						}
-						break;
-					}
+			for (int i = 0; i < CurrentLayer.size(); i++)
+				{
+				DrawTexture
+					(
+					Resources::Textures[CurrentLayer[i].entityDescription->Textures], 
+					CurrentLayer[i].position.x * TILESIZE,
+					CurrentLayer[i].position.y * TILESIZE,
+					WHITE
+					);
+				}
+
+			CurrentLayer = CurrentGameState.CurrentLevel.EntetiesLayer1;
+
+			for (int i = 0; i < CurrentLayer.size(); i++)
+				{
+				DrawTexture
+				(
+					Resources::Textures[CurrentLayer[i].entityDescription->Textures],
+					CurrentLayer[i].position.x * TILESIZE,
+					CurrentLayer[i].position.y * TILESIZE,
+					WHITE
+				);
 				}
 			}
 		}

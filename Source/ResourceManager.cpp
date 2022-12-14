@@ -182,15 +182,35 @@ void Resources::LoadResources()
 			case 'p':
 		{
 			tEntity.position = Vector2i(x, y);
+			for (auto& d : Resources::entitiesdesc)
+				{
+				if (d.symbolInLevelFile == 'p')
+					{
+					tEntity.entityDescription = &d;
+					}
+				}
 			tEntity.entityType = EntityType::PLAYER;
+			
+			//Code like this should be handled in Aadis code
 			tEntity.IsPlayer = true;
-			tLevel.entities.push_back(tEntity);
+			tEntity.IsSwitch = false;
+			tEntity.IsMovable = true;
+			tEntity.IsBox = false;
+			
+			//tLevel.entities.push_back(tEntity);
+
+			//This sets the default player position !!NO MORE THAN 1 PLAYER!!
+			tLevel.PlayerPosition.x = x;
+			tLevel.PlayerPosition.y = y;
+
+			tLevel.EntetiesLayer1.push_back(tEntity);
 			x++;
 			break;
 		}
 		case '#':
 		{
-			tEntity.position = Vector2i(x, y); for (auto& d : Resources::entitiesdesc)
+			tEntity.position = Vector2i(x, y);
+			for (auto& d : Resources::entitiesdesc)
 			{
 				if (d.symbolInLevelFile == '#')
 				{
@@ -199,7 +219,11 @@ void Resources::LoadResources()
 			}
 			tEntity.entityType = EntityType::WALL;
 			tEntity.IsPlayer = false;
-			tLevel.entities.push_back(tEntity);
+			tEntity.IsSwitch = false;
+			tEntity.IsMovable = false;
+			tEntity.IsBox = false;
+			//tLevel.entities.push_back(tEntity);
+			tLevel.EntetiesLayer1.push_back(tEntity);
 			x++;
 			break;
 		}
@@ -216,7 +240,11 @@ void Resources::LoadResources()
 			}
 			tEntity.entityType = EntityType::BOX;
 			tEntity.IsPlayer = false;
-			tLevel.entities.push_back(tEntity);
+			tEntity.IsSwitch = false;
+			tEntity.IsMovable = true;
+			tEntity.IsBox = true;
+			//tLevel.entities.push_back(tEntity);
+			tLevel.EntetiesLayer1.push_back(tEntity);
 			x++;
 			break;
 		}
@@ -233,7 +261,11 @@ void Resources::LoadResources()
 			}
 			tEntity.entityType = EntityType::SWITCH;
 			tEntity.IsPlayer = false;
-			tLevel.entities.push_back(tEntity);
+			tEntity.IsSwitch = true;
+			tEntity.IsMovable = false;
+			tEntity.IsBox = false;
+			//tLevel.entities.push_back(tEntity);
+			tLevel.EntetiesLayer0.push_back(tEntity);
 			x++;
 			break;
 		}
@@ -248,7 +280,8 @@ void Resources::LoadResources()
 		case '*':
 		{
 			Levels.push_back(tLevel);
-			tLevel.entities.clear();
+			//tLevel.entities.clear(); Instead of simply clearing 1 array, a new instanciation of a level in its entierty is more propper.
+			tLevel = Level{};
 			x = 0; y = -1;
 			break;
 		}

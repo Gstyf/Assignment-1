@@ -8,16 +8,9 @@
 #include "raymath.h"
 #include <iostream>
 
-
-/*
-TODO JH
-
-Bugfix
-Unload resources
-Entity and Switch seperation and resourcemanager and switch integration
-Logic restructuring
-Connection overhaul
-
+/*  TODO
+CLEANUP & SOUND
+UNLOADING OF RESOURCES
 
 */
 
@@ -32,8 +25,6 @@ int main(void)
 	InitAudioDevice();
 	
 	Resources::LoadResources();
-	//PlaySound(Resources::Sounds[0]);
-
 
 	//Game Loop (Runs in Game.cpp)
 	while (!WindowShouldClose())

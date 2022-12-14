@@ -19,6 +19,7 @@ struct GameState {
 struct GameManager {
 	GameState CurrentGameState;
 
+	void InstanciateCurrentLevel();
 	void UpdateGameLoop();
 	void RenderGraphics();
 	};

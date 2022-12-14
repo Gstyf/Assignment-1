@@ -1,3 +1,14 @@
+/*
+ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE
+
+
+Old non grid based movement-system
+
+
+ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE
+
+
+
 #include <vector>
 #include "Level.h"
 #include "myMath.h"
@@ -134,4 +145,4 @@ void Level::MovePlayer(Vector2i MovementVector)
 void Level::update()
 	{
 		MovePlayer(CreateMovementVector());
-	}
+	}*/

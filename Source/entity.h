@@ -14,7 +14,7 @@ enum class EntityType
 
 struct EntityDescription
 {
-	bool Movable = false;                   // the properties of the entities
+	bool Movable = false;		// the properties of the entities
 	int Textures = {};
 	char symbolInLevelFile = 0; // redundant??
 };
@@ -28,5 +28,6 @@ public:
 	bool IsPlayer; //player only
 	bool IsMovable; //box and player
 	bool IsSwitch; //switches are not going to be entities in the final version
+	bool IsBox;
 	};
 
