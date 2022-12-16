@@ -1,3 +1,5 @@
+Textures, Level loader and this guide created by Gustaf!
+
 When creating new levels here's what you should know,
 Levels are created by pushing entities with coordinates into the levels list's array of entities. The entities are created like this:
 
@@ -20,15 +22,19 @@ Levels are created by pushing entities with coordinates into the levels list's a
     ##########
 *
 
-This is an easier way to read it.
+Below is the index for reading it. Case-sensitive!
 p = Player, w = Wall, b = Box, s = Switch, * = Next level
+
 
 Blank spaces,  as well as any non-aforementioned characters will count as an empty coordinate. New lines will move the y-coordinate down by one unit, and character at all will move the x-coordinate right one unit. 
 
 The editor will read the file in order, convert it to a string, and the interpret the characters in a switchcase for each character in the text document 'Levels.txt'. The program  will automatically stop adding trying to add levels when the .txt file runs out of character.
 
-::IMPORTANT::
+	::IMPORTANT::
+
+Make sure that there are only one (1) player (p) on your level, or you will have problems.
+
 Make sure you use an asterix (*) as the last character, otherwise it will not push your level into the game. :(
 
-The player should ALWAYS be the first entity entered.
+There should be no asterix above the first level, or you will push an empty level. Start creating you level on the next line below the asterix!
 
