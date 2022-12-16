@@ -1,6 +1,14 @@
 #include "ResourceManager.h"
 
 
+/* Jonathan Hedvall
+The resourcemanager system is kind of all over the place consistency wise due to the fact that all of us have worked on it. But the reason we do it like this is to remove as much text from the code as possible.
+The level editor system also helps alot when creating levels due to its visual element.
+*/
+
+
+
+
 std::vector<Level> Resources::Levels;
 std::vector<Texture2D> Resources::Textures;
 std::vector<Sound> Resources::Sounds;
