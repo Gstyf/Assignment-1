@@ -76,7 +76,7 @@ bool Level::MoveEntity(Vector2i& MovementVector, int XVal, int YVal, bool CanPus
 		return (true);
 		}
 		
-	if (FuturePosEntity->IsMovable) //Movable entity
+	if (FuturePosEntity->entityDescription->IsMovable) //Movable entity
 		{
 		if (CanPush == false) { return (false); }
 
@@ -98,11 +98,11 @@ bool Level::CheckWin() //Check if there is a box above each switch
 	for (int i = 0; i < EntetiesLayer0.size(); i++)
 		{
 		Entity TempEntity = EntetiesLayer0[i]; 
-		if (TempEntity.IsSwitch)
+		if (TempEntity.entityDescription->IsSwitch)
 			{
 			Entity* EntityToCheck = LevelGrid.GetEntityAtPos(TempEntity.position.x, TempEntity.position.y, 1);
 			if (EntityToCheck == nullptr) { return (false); }
-			if (EntityToCheck->IsBox == false) { return (false); }
+			if (EntityToCheck->entityDescription->IsBox == false) { return (false); }
 			}
 		}
 	return (true);
