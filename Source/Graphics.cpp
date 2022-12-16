@@ -6,6 +6,10 @@
 
 #include "CONSTANTS.h"
 
+/* Jonathan Hedvall
+This rendersystem is designed to allow us to easily create UI and to provide an input for the entites to be rendered and effective way.
+It's hard to explain "WHY" this is designed this way without going into the realm of the entities but the texture is stored in the resources to seperate it and each entity has a reference to what texture they use.
+*/
 
 void GameManager::RenderGraphics()
 	{

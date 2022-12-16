@@ -8,14 +8,13 @@
 #include "raymath.h"
 #include <iostream>
 
-/*  TODO
-MOVING BOOL DEFS TO AADI
-CLEANUP & SOUND /J
-UNLOADING OF RESOURCES #DONE
-IMPLEMTATION OF SOUND
-README
-COMMENTS
-WHY COMMENTS 
+/* Jonathan Hedvall
+The reason this gamestate system exists in the manner it does is to allow us to move as much code as possible into their own dedicated sections where we can keep the document to a single purpose and-
+-so that a clear chain of executions can be determined. For example a call to the movementlogic looks like this:
+
+Main.cpp (Contains gameloop) -> UpdateGameLoop() -> Game.cpp (Handles gamestate logic) -> CurrentLevel.Update() -> LevelLogic.cpp (Handles level logic)
+
+This way it's easy to add or remove parts from the game and they are not connected except for small openings.
 */
 
 

@@ -4,8 +4,10 @@
 #include "entity.h"
 #include "CONSTANTS.h"
 
-//Implementation of functions and descriptions of them are stored in NewLevelLogic.cpp
-
+/* Jonathan Hedvall
+Without repeating what has already been said in LevelLogic.cpp this file is made so that we can easily store the enteties in a system that can be interacted with both from the renderer and the levellogic-
+-in ways that are most beneficial to both. (Array for renderer, grid for logic)
+*/
 
 //Grid, construct a grid with two layers
 struct GridComponent {
