@@ -4,13 +4,16 @@
     <ClCompile Include="Source\main.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
-    <ClCompile Include="Source\LevelLogic.cpp">
-      <Filter>CPP</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\LevelGraphics.cpp">
+    <ClCompile Include="Source\Graphics.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
     <ClCompile Include="Source\ResourceManager.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LevelLogic.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
   </ItemGroup>
@@ -28,6 +31,9 @@
       <Filter>HEADER</Filter>
     </ClInclude>
     <ClInclude Include="Source\ResourceManager.h">
+      <Filter>HEADER</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CONSTANTS.h">
       <Filter>HEADER</Filter>
     </ClInclude>
   </ItemGroup>

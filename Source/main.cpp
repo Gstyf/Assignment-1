@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Level.h"
+#include "CONSTANTS.h"
 
 #include "entity.h"
 
@@ -7,108 +8,44 @@
 #include "raymath.h"
 #include <iostream>
 
-	
+/* Jonathan Hedvall
+The reason this gamestate system exists in the manner it does is to allow us to move as much code as possible into their own dedicated sections where we can keep the document to a single purpose and-
+-so that a clear chain of executions can be determined. For example a call to the movementlogic looks like this:
+
+Main.cpp (Contains gameloop) -> UpdateGameLoop() -> Game.cpp (Handles gamestate logic) -> CurrentLevel.Update() -> LevelLogic.cpp (Handles level logic)
+
+This way it's easy to add or remove parts from the game and they are not connected except for small openings.
+*/
+
+
 int main(void)
 	{
 	// Initialization
-	const int screenWidth = 896;
-	const int screenHeight = 512;
-
-	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-
+	GameManager GMMain = { GameState { GameScreen::TITLE, 0 } };
+	
+	InitWindow(WINDOWWIDTH, WINDOWHEIGHT, "raylib [core] example - basic window");
+	SetTargetFPS(60);
+	InitAudioDevice();
+	
 	Resources::LoadResources();
 
-	GameState GSMain = { GameScreen::TITLE, 0 }; //PLayer is Entity 0
-
-	Level CurrentLevel = Resources::Levels[GSMain.CurrentLevelIndex]; //TEMPORARY
-	CurrentLevel.ResetScore();
-
-	SetTargetFPS(60); 
-
-	// Main game loop
-	try
+	//Game Loop (Runs in Game.cpp)
+	while (!WindowShouldClose())
 		{
-		while (!WindowShouldClose())    
+		try
 			{
-			if (IsKeyPressed(KEY_R))
-				{
-				GSMain.CurrentScreen = GameScreen::GAMEPLAY;
-				CurrentLevel = Resources::Levels[GSMain.CurrentLevelIndex];
-				CurrentLevel.ResetScore();
-				}
-
-			switch (GSMain.CurrentScreen)
-				{
-				case GameScreen::TITLE:
-					{
-					BeginDrawing();
-
-					ClearBackground(BLACK);
-
-					DrawText("TEAM 7.", 100, 100, 60, RAYWHITE);
-					DrawText("SPACE TO CONTINUE", 100, 300, 40, RAYWHITE);
-
-					EndDrawing();
-
-					if (IsKeyPressed(KEY_SPACE)) { GSMain.CurrentScreen = GameScreen::GAMEPLAY; }
-					
-					break;
-					}
-
-				case GameScreen::GAMEPLAY:
-					{
-					//Logic
-					CurrentLevel.update();
-					
-
-					//Rendering
-					BeginDrawing();
-
-					ClearBackground(BLACK);
-
-					//IMPLEMENT RENDERING HERE:
-					CurrentLevel.render();
-					DrawText("R TO RESET", 680, 20, 30, RAYWHITE);
-
-					EndDrawing();
-
-					//std::cout << CurrentLevel.CurrentScore << "\n";
-					if (CurrentLevel.CurrentScore >= CurrentLevel.RequiredScore) { GSMain.CurrentScreen = GameScreen::ENDING; }
-					break;
-					}
-				
-				case GameScreen::GAMEOVER:
-					{
-					break;
-					}
-				
-				case GameScreen::ENDING:
-					{
-					ClearBackground(BLACK);
-
-					DrawText("YOU WIN", 200, 200, 100, RAYWHITE);
-					DrawText("PRESS SPACE FOR NEXT LEVEL", 170, 300, 30, RAYWHITE);
-
-					if (IsKeyPressed(KEY_SPACE)) 
-						{ 
-						GSMain.CurrentScreen = GameScreen::GAMEPLAY;
-					 	//int LevelCount = Resources::Levels.size();
-						if (GSMain.CurrentLevelIndex >= Resources::Levels.size() - 1) { GSMain.CurrentLevelIndex = 0; }
-						else { GSMain.CurrentLevelIndex++; }
-						CurrentLevel = Resources::Levels[GSMain.CurrentLevelIndex];
-						CurrentLevel.ResetScore();
-						}
-					
-					EndDrawing();
-					break;
-					}
-				}
+			GMMain.UpdateGameLoop();
+			}
+		catch (int ERRORID)
+			{
+			std::cout << "ERROR: " << ERRORID;
 			}
 		}
-	catch (int ERRORID)
-		{
-		std::cout << "ERROR: " << ERRORID;
-		}
+	
+
+	//UNLOAD RESOURCES
+	Resources::UnloadResources();
+	CloseAudioDevice();
 
 	CloseWindow(); // Close window and OpenGL context
 	return 0;

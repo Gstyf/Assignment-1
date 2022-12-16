@@ -1,0 +1,3 @@
+resources/sounds/brick.wav
+resources/sounds/move.wav
+resources/sounds/Win.wav

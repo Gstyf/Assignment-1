@@ -1,0 +1,8 @@
+
+entity { flags : movable ; char : p ; Object : player;}
+    
+entity { char: # ; flags: immovable; Object : wall; }
+
+entity { flags : movable ; char : b ; Object : box; }
+
+entity { flags : immovable ; char : s ; Object : switch ; }
