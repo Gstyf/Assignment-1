@@ -1,4 +1,12 @@
 #include "Game.h"
+/* Jonathan Hedvall
+This code handles the logic and keypresses in the context of the gamestates. We needed to have this system somewhere and we thought about having a movement controller that sends events to the game manager.
+The system we currently have is way lighter and less abstracted but is also more rigid in the sense that an eventsystem could support multiple things (such as seperating sound from movement and having a dedicated
+soundmanager under the gamemanager which events could be sent to).
+The reason the graphics are not here is so that they are properly seperated and easier to manage, for example a switch in gamestate switching code should not change how said gamestate is-
+-rendered from a logic perspective.
+*/
+
 
 
 void GameManager::InstanciateCurrentLevel()

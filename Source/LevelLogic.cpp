@@ -2,13 +2,32 @@
 #include "Level.h"
 #include <assert.h>
 
-/*
+/* Jonathan Hedvall
+This levellogic is the 2nd iteration of the system. I wanted to handle it through the use of a gridsystem to make the code both faster and easier to write/handle.
+From a peformance perspective I belive that constructing one grid for each level on demand is paid tenfold in the effectiveness it gives, for example I can simply use indecies when accesing-
+-instead of having to search through the entire array to find a single entity. The previous option could be made more effective through the use of a hashmap tailored specifically to this situation-
+-but I would rather work with a grid system. The reason the gridsystem is not built from the beginning is the preserve the benefits of a list system of storing entities, namely it's ease of handle outside-
+-of the movement based code (graphics and initialization for example).
 
+The "grid" has two layers and is a simple array which behaves as a grid through the use of translate functions, it contains a GridComponent in each cell which carries two entity pointers. 
+This serves to create a two layered grid where different logic can be handled based on the grid. Objects on layer0 can have objects on top of them (such as a switch) wheras objects in layer1 can't.
 
+The movement logic itself is very simple and can be described as this logic system:
 
+1: Check future position for object
+	if null move there and return true
+	else if movable object is there do 1: on said object
+		if return true : move there and return true
 
+	if there is an immovable object there return false
 
+The reason I choose this was beacuse I belive it is the most effective way to interact with my grid system.
+
+This file also handles the winlogic and it simply checks each time the player moves if all switches have boxes on top of it.
+By using this system I can use the much more effective entitylayer0 vector instead of having to go through the grid, the disadvantages of this is that it's hard to interact and play conditional code in on switch cases
+for example playing sounds when a box is moved over a switch. 
 */
+
 
 //Grid Managment
 int EntityGrid::TranslateTo1D(int XVal, int YVal) //Translates 2D coordinates into 1D ones
