@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 entity { flags : movable ; char : p ; texture : player; }
+=======
+entity { flags : movable ; char : p ; Object : player;}
+>>>>>>> 640a68a4ef67d51b3a762ee91ae9d632c8458e07
     
-entity { char: # ; flags: immovable; texture : wall; }
+entity { char: # ; flags: immovable; Object : wall; }
 
-entity { flags : movable ; char : b ; texture : box; }
+entity { flags : movable ; char : b ; Object : box; }
 
-entity { flags : immovable ; char : s ; texture : switch ; }
+entity { flags : immovable ; char : s ; Object : switch ; }

@@ -69,17 +69,17 @@ void ParsEntityDescriptions(char* string)
 								eat_space(&cursor);
 								if (accept_string(&cursor, "movable"))
 								{
-									desc.Movable = true;
+									desc.IsMovable = true;
 								}
 								else if (accept_string(&cursor, "immovable"))
 								{
-									desc.Movable = false;
+									desc.IsMovable = false;
 								}
 							}
 						}
 					}
 					eat_space(&cursor);
-					if (accept_string(&cursor, "texture"))
+					if (accept_string(&cursor, "Object"))
 					{
 						eat_space(&cursor);
 						if (accept_string(&cursor, ":"))
@@ -91,18 +91,27 @@ void ParsEntityDescriptions(char* string)
 								if (accept_string(&cursor, "player"))
 								{
 									desc.Textures = 0;
+									desc.IsPlayer = true;
 								}
 								else if (accept_string(&cursor, "wall"))
 								{
 									desc.Textures = 1;
+						
 								}
 								else if (accept_string(&cursor, "box"))
 								{
 									desc.Textures = 2;
+									desc.IsBox = true;
+									desc.IsPlayer = false;
+									desc.IsSwitch = false;
+									
 								}
 								else if (accept_string(&cursor, "switch"))
 								{
 									desc.Textures = 3;
+									desc.IsSwitch = true;
+									desc.IsPlayer = false;
+									desc.IsBox = false;
 								}
 							}
 						}
@@ -192,10 +201,7 @@ void Resources::LoadResources()
 				}
 			
 			//Code like this should be handled in Aadis code
-			tEntity.IsPlayer = true;
-			tEntity.IsSwitch = false;
-			tEntity.IsMovable = true;
-			tEntity.IsBox = false;
+			
 			
 			//tLevel.entities.push_back(tEntity);
 
@@ -217,10 +223,14 @@ void Resources::LoadResources()
 					tEntity.entityDescription = &d;
 				}
 			}
+<<<<<<< HEAD
 			tEntity.IsPlayer = false;
 			tEntity.IsSwitch = false;
 			tEntity.IsMovable = false;
 			tEntity.IsBox = false;
+=======
+			tEntity.entityType = EntityType::WALL;
+>>>>>>> 640a68a4ef67d51b3a762ee91ae9d632c8458e07
 			//tLevel.entities.push_back(tEntity);
 			tLevel.EntetiesLayer1.push_back(tEntity);
 			x++;
@@ -237,10 +247,14 @@ void Resources::LoadResources()
 					tEntity.entityDescription = &d;
 				}
 			}
+<<<<<<< HEAD
 			tEntity.IsPlayer = false;
 			tEntity.IsSwitch = false;
 			tEntity.IsMovable = true;
 			tEntity.IsBox = true;
+=======
+			tEntity.entityType = EntityType::BOX;
+>>>>>>> 640a68a4ef67d51b3a762ee91ae9d632c8458e07
 			//tLevel.entities.push_back(tEntity);
 			tLevel.EntetiesLayer1.push_back(tEntity);
 			x++;
@@ -257,10 +271,14 @@ void Resources::LoadResources()
 					tEntity.entityDescription = &d;
 				}
 			}
+<<<<<<< HEAD
 			tEntity.IsPlayer = false;
 			tEntity.IsSwitch = true;
 			tEntity.IsMovable = false;
 			tEntity.IsBox = false;
+=======
+			tEntity.entityType = EntityType::SWITCH;
+>>>>>>> 640a68a4ef67d51b3a762ee91ae9d632c8458e07
 			//tLevel.entities.push_back(tEntity);
 			tLevel.EntetiesLayer0.push_back(tEntity);
 			x++;
