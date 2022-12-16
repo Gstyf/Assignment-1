@@ -45,7 +45,7 @@ void GameManager::UpdateGameLoop() //Handles all scene and level logic and then 
 			if (CurrentGameState.CurrentLevel.Win) //Win 
 				{ 
 				StopSoundMulti();
-				PlaySoundMulti(Resources::Sounds[0]);
+				PlaySoundMulti(Resources::Sounds[2]);
 				CurrentGameState.CurrentScreen = GameScreen::ENDING; 
 				} 
 			break;
