@@ -9,9 +9,13 @@
 #include <iostream>
 
 /*  TODO
+MOVING BOOL DEFS TO AADI
 CLEANUP & SOUND
-UNLOADING OF RESOURCES
-
+UNLOADING OF RESOURCES #DONE
+IMPLEMTATION OF SOUND
+README
+COMMENTS
+WHY COMMENTS 
 */
 
 
@@ -41,6 +45,7 @@ int main(void)
 	
 
 	//UNLOAD RESOURCES
+	Resources::UnloadResources();
 
 	CloseWindow(); // Close window and OpenGL context
 	return 0;

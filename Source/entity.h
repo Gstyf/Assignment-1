@@ -24,10 +24,9 @@ class Entity
 public:
 	Vector2i position; //all entities have position, so this is not removable
 	EntityDescription* entityDescription; //This is the description that dictates if an object is movoable, and what texture it uses.
-	EntityType entityType; //get rid of?
 	bool IsPlayer; //player only
 	bool IsMovable; //box and player
-	bool IsSwitch; //switches are not going to be entities in the final version
+	bool IsSwitch;
 	bool IsBox;
 	};
 

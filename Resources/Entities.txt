@@ -1,4 +1,4 @@
-entity { flags : movable ; char : p ; texture : player;}
+entity { flags : movable ; char : p ; texture : player; }
     
 entity { char: # ; flags: immovable; texture : wall; }
 

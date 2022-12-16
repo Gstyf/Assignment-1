@@ -38,7 +38,7 @@ void GameManager::UpdateGameLoop() //Handles all scene and level logic and then 
 		case (GameScreen::GAMEPLAY):
 			{
 			if (IsKeyDown(KEY_A)) { CurrentGameState.CurrentScreen = GameScreen::ENDING; } //Skip Level
-			if (IsKeyDown(KEY_R)) { InstanciateCurrentLevel(); } //Reload level
+			if (IsKeyDown(KEY_R)) { InstanciateCurrentLevel();} //Reload level
 			
 			CurrentGameState.CurrentLevel.Update();
 			

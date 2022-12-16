@@ -15,8 +15,9 @@ struct Resources {
 	static std::vector<Sound> Sounds;
 	static std::vector<EntityDescription> entitiesdesc;
 
+
 	static void LoadResources();
-	void RetrieveSymbol(Entity& tEntity);
+	static void UnloadResources();
 	};
 
 

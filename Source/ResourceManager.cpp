@@ -150,6 +150,7 @@ void Resources::LoadResources()
 	}
 	SoundFile.close();
 
+
 	//Load Textures
 	std::string ReadStringTEXTURE;
 	std::ifstream TextureFile{ TextureDirectory };
@@ -189,7 +190,6 @@ void Resources::LoadResources()
 					tEntity.entityDescription = &d;
 					}
 				}
-			tEntity.entityType = EntityType::PLAYER;
 			
 			//Code like this should be handled in Aadis code
 			tEntity.IsPlayer = true;
@@ -217,7 +217,6 @@ void Resources::LoadResources()
 					tEntity.entityDescription = &d;
 				}
 			}
-			tEntity.entityType = EntityType::WALL;
 			tEntity.IsPlayer = false;
 			tEntity.IsSwitch = false;
 			tEntity.IsMovable = false;
@@ -238,7 +237,6 @@ void Resources::LoadResources()
 					tEntity.entityDescription = &d;
 				}
 			}
-			tEntity.entityType = EntityType::BOX;
 			tEntity.IsPlayer = false;
 			tEntity.IsSwitch = false;
 			tEntity.IsMovable = true;
@@ -259,7 +257,6 @@ void Resources::LoadResources()
 					tEntity.entityDescription = &d;
 				}
 			}
-			tEntity.entityType = EntityType::SWITCH;
 			tEntity.IsPlayer = false;
 			tEntity.IsSwitch = true;
 			tEntity.IsMovable = false;
@@ -291,3 +288,18 @@ void Resources::LoadResources()
 		}
 	}
 }
+
+
+void Resources::UnloadResources()
+	{
+	for (int i = 0; i < Textures.size(); i++)
+		{
+		UnloadTexture(Textures[i]);
+		}
+
+	for (int i = 0; i < Sounds.size(); i++)
+		{
+		StopSoundMulti();
+		UnloadSound(Sounds[i]);
+		}
+	}

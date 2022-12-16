@@ -2,6 +2,13 @@
 #include "Level.h"
 #include <assert.h>
 
+/*
+
+
+
+
+
+*/
 
 //Grid Managment
 int EntityGrid::TranslateTo1D(int XVal, int YVal) //Translates 2D coordinates into 1D ones
@@ -19,8 +26,8 @@ Entity* EntityGrid::GetEntityAtPos(int XIndex, int YIndex, int Layer) //Gets an 
 GridComponent* EntityGrid::GetComponentAtPos(int XIndex, int YIndex) //Gets a gridcomponent at a position by pointer
 	{
 	int Index = TranslateTo1D(XIndex, YIndex);
-	GridComponent ComponentToReturn = InternalArray[Index];
-	return (&(ComponentToReturn));
+	GridComponent* ComponentToReturn = &InternalArray[Index];
+	return (ComponentToReturn);
 	}
 
 
@@ -88,8 +95,10 @@ bool Level::MoveEntity(Vector2i& MovementVector, int XVal, int YVal, bool CanPus
 		else { return (false); }
 		}
 
-	//PlaySound(Resources::Sounds[0]);
-	return (false); //Unmovable entity
+
+	//Unmovable entity
+	PlaySoundMulti(Resources::Sounds[0]);
+	return (false); 
 	}
 
 
