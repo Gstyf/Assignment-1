@@ -15,8 +15,8 @@ constexpr const char* EntityDescriptionFilePath = "./Resources/Entities.txt";
 
 void eat_space(char** cursor)
 {
-	while (**cursor != 0 && isspace((int) **cursor))
-	{
+	while (**cursor != 0 && isspace((int) **cursor))                 // I made this fucntion So when I am iterating through file and if i find a space. I just move forward instead getting stuck 
+	{                                                                // Adarsh
 		(*cursor)++;
 	}
 };
@@ -24,9 +24,9 @@ void eat_space(char** cursor)
 bool accept_string(char** cursors, const char* string)
 {
 	char* c = *cursors;
-
-	for (;*c && *string && *c == *string; c++, string++)
-	{
+	                                                                // i made this functioon which works like stringcompare and it is boolean So it returns and bool functions. So i can go through whole text and return ture if i find the string.
+	for (;*c && *string && *c == *string; c++, string++)            // Adarsh
+	{ 
 	}
 
 	if (*string == 0)
@@ -40,6 +40,8 @@ bool accept_string(char** cursors, const char* string)
 
 /*
 	Code created by Adarsh
+
+	So As we decide to use symbols to design levels and this function reads through the entity.txt and Assign the description according to the file and at the end it pushes it to entity vector. This way I was able to strong different description in easier way Also make it flexible to make changes later
 */
 void ParsEntityDescriptions(char* string)
 {
@@ -135,14 +137,14 @@ void ParsEntityDescriptions(char* string)
 					}
 				}
 			}
-			Resources::entitiesdesc.push_back(desc);
+			Resources::entitiesdesc.push_back(desc);       // It pushes the entitydescription to vector which is in resourcesManager.h
 		}
 		else
 		{
-			break;
+			break;                              // I used else statement So it just breaks when it is  not any string apart from what i have written
 		}
 	}
-	UnloadFileText(string);
+	UnloadFileText(string);                //  IU used it to unload the file So it won't keep loading the files after i finised using the parsing function
 }
 
 void Resources::LoadResources()
@@ -172,9 +174,9 @@ void Resources::LoadResources()
 	}
 	TextureFile.close();
 
-	auto entity_descriptions = LoadFileText(EntityDescriptionFilePath);
-
-	ParsEntityDescriptions(entity_descriptions);
+	
+	auto entity_descriptions = LoadFileText(EntityDescriptionFilePath);         // I use this to load the entity file which I pass it inside my parsing function So it can read through it and file description
+	ParsEntityDescriptions(entity_descriptions);                                // Adarsh
 	
 
 	/*
