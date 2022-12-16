@@ -179,6 +179,9 @@ void Resources::LoadResources()
 
 	/*
 		Code created by Gustaf
+		//
+		Because we decided to use symbols to represents entities instead of integers, the level loader had to be changed up. I learned I could use a foreach to iterate through the characters in a string.
+		I chose to make use of this iteration by implementing a switch-case because I can make use of the behaviour when each character is checked to massively improve flexibility and ease-of-use when creating new levels. Each character in the string will move the x-value up, and each new line '\n' would increment the y-value, giving a new entity its x and y position. Then to give the entity it's properties I can iterate throught he vector of entity descriptions to assign what kind of entity it is into the level.EntitiesLayer# vector. 
 	*/
 	//Load Levels
 	std::string level_creation = LoadFileText(LevelDirectory);
@@ -193,17 +196,15 @@ void Resources::LoadResources()
 		{
 			tEntity.position = Vector2i(x, y);
 			for (auto& d : Resources::entitiesdesc)
-				{
+			{
 				if (d.symbolInLevelFile == 'p')
-					{
+				{
 					tEntity.entityDescription = &d;
-					}
 				}
-
+			}
 			//This sets the default player position !!NO MORE THAN 1 PLAYER!!
 			tLevel.PlayerPosition.x = x;
 			tLevel.PlayerPosition.y = y;
-
 			tLevel.EntetiesLayer1.push_back(tEntity);
 			x++;
 			break;
@@ -222,7 +223,6 @@ void Resources::LoadResources()
 			x++;
 			break;
 		}
-		break;
 		case 'b':
 		{
 			tEntity.position = Vector2i(x, y);
@@ -237,7 +237,6 @@ void Resources::LoadResources()
 			x++;
 			break;
 		}
-		break;
 		case 's':
 		{
 			tEntity.position = Vector2i(x, y);
@@ -252,19 +251,17 @@ void Resources::LoadResources()
 			x++;
 			break;
 		}
-		break;
 		case '\n':
 		{
 			x = 0;
 			y++;
 			break;
 		}
-		break;
 		case '*':
 		{
-			Levels.push_back(tLevel); //Instead of simply clearing 1 array, a new instanciation of a level in its entierty is more propper.
+			Levels.push_back(tLevel); //Pushes the new temporary level into the vector of levels.
 			tLevel = Level{};
-			x = 0; y = -1;
+			x = 0; y = -1; //I set y to -1 because otherwise it looks visually "weird" when you have to create a new level on the same line as the asterix in the 'Levels.txt' file where everything is offset by 1 character.
 			break;
 		}
 		default:
@@ -276,15 +273,15 @@ void Resources::LoadResources()
 
 
 void Resources::UnloadResources()
-	{
+{
 	for (int i = 0; i < Textures.size(); i++)
-		{
+	{
 		UnloadTexture(Textures[i]);
-		}
+	}
 
 	for (int i = 0; i < Sounds.size(); i++)
-		{
+	{
 		StopSoundMulti();
 		UnloadSound(Sounds[i]);
-		}
 	}
+}
