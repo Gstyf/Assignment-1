@@ -200,10 +200,6 @@ void Resources::LoadResources()
 					}
 				}
 			
-			//Code like this should be handled in Aadis code
-			
-			
-			//tLevel.entities.push_back(tEntity);
 
 			//This sets the default player position !!NO MORE THAN 1 PLAYER!!
 			tLevel.PlayerPosition.x = x;
@@ -223,15 +219,6 @@ void Resources::LoadResources()
 					tEntity.entityDescription = &d;
 				}
 			}
-<<<<<<< HEAD
-			tEntity.IsPlayer = false;
-			tEntity.IsSwitch = false;
-			tEntity.IsMovable = false;
-			tEntity.IsBox = false;
-=======
-			tEntity.entityType = EntityType::WALL;
->>>>>>> 640a68a4ef67d51b3a762ee91ae9d632c8458e07
-			//tLevel.entities.push_back(tEntity);
 			tLevel.EntetiesLayer1.push_back(tEntity);
 			x++;
 			break;
@@ -247,15 +234,6 @@ void Resources::LoadResources()
 					tEntity.entityDescription = &d;
 				}
 			}
-<<<<<<< HEAD
-			tEntity.IsPlayer = false;
-			tEntity.IsSwitch = false;
-			tEntity.IsMovable = true;
-			tEntity.IsBox = true;
-=======
-			tEntity.entityType = EntityType::BOX;
->>>>>>> 640a68a4ef67d51b3a762ee91ae9d632c8458e07
-			//tLevel.entities.push_back(tEntity);
 			tLevel.EntetiesLayer1.push_back(tEntity);
 			x++;
 			break;
@@ -271,15 +249,6 @@ void Resources::LoadResources()
 					tEntity.entityDescription = &d;
 				}
 			}
-<<<<<<< HEAD
-			tEntity.IsPlayer = false;
-			tEntity.IsSwitch = true;
-			tEntity.IsMovable = false;
-			tEntity.IsBox = false;
-=======
-			tEntity.entityType = EntityType::SWITCH;
->>>>>>> 640a68a4ef67d51b3a762ee91ae9d632c8458e07
-			//tLevel.entities.push_back(tEntity);
 			tLevel.EntetiesLayer0.push_back(tEntity);
 			x++;
 			break;
@@ -294,8 +263,7 @@ void Resources::LoadResources()
 		break;
 		case '*':
 		{
-			Levels.push_back(tLevel);
-			//tLevel.entities.clear(); Instead of simply clearing 1 array, a new instanciation of a level in its entierty is more propper.
+			Levels.push_back(tLevel); //Instead of simply clearing 1 array, a new instanciation of a level in its entierty is more propper.
 			tLevel = Level{};
 			x = 0; y = -1;
 			break;
