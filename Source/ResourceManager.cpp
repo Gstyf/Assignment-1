@@ -199,7 +199,6 @@ void Resources::LoadResources()
 					tEntity.entityDescription = &d;
 					}
 				}
-			
 
 			//This sets the default player position !!NO MORE THAN 1 PLAYER!!
 			tLevel.PlayerPosition.x = x;

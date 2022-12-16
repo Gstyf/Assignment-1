@@ -1,16 +1,5 @@
 #pragma once
 #include "myMath.h"
-/*
-	Entity.h code created by Gustaf and modified by Adarsh and Jonathan
-*/
-enum class EntityType
-{
-	NONE = 0, //We shouldn't retrieve this.
-	PLAYER,
-	WALL,
-	BOX,
-	SWITCH,
-};
 
 struct EntityDescription
 {

@@ -6,9 +6,7 @@
 
 #include "CONSTANTS.h"
 
-/*
-	Code created by Gustaf (but moved around a bit, this used to be in main())
-*/
+
 void GameManager::RenderGraphics()
 	{
 	BeginDrawing();

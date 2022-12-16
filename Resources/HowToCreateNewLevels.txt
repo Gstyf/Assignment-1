@@ -31,4 +31,4 @@ The editor will read the file in order, convert it to a string, and the interpre
 Make sure you use an asterix (*) as the last character, otherwise it will not push your level into the game. :(
 
 The player should ALWAYS be the first entity entered.
-A new line means a new level. Whatever is entered first will be rendered first.
+

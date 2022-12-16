@@ -4,9 +4,6 @@
     <ClCompile Include="Source\main.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
-    <ClCompile Include="Source\LevelLogic.cpp">
-      <Filter>CPP</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Graphics.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
@@ -16,7 +13,7 @@
     <ClCompile Include="Source\Game.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
-    <ClCompile Include="Source\NewLevelLogic.cpp">
+    <ClCompile Include="Source\LevelLogic.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
   </ItemGroup>

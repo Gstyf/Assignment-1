@@ -42,7 +42,12 @@ void GameManager::UpdateGameLoop() //Handles all scene and level logic and then 
 			
 			CurrentGameState.CurrentLevel.Update();
 			
-			if (CurrentGameState.CurrentLevel.Win) { CurrentGameState.CurrentScreen = GameScreen::ENDING; } //Win
+			if (CurrentGameState.CurrentLevel.Win) //Win 
+				{ 
+				StopSoundMulti();
+				PlaySoundMulti(Resources::Sounds[0]);
+				CurrentGameState.CurrentScreen = GameScreen::ENDING; 
+				} 
 			break;
 			}
 		}

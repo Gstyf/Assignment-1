@@ -3,9 +3,7 @@
 #include "Level.h"
 #include "ResourceManager.h"
 
-/*
-	Code created by Gustaf & Jonathan
-*/
+
 enum struct GameScreen { TITLE = 0, GAMEPLAY, GAMEOVER, ENDING, LEVELSELECT };
 
 

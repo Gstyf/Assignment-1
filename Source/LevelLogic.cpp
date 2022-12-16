@@ -1,32 +1,63 @@
-/*
-ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE
-
-
-Old non grid based movement-system
-
-
-ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE ARCHAIC CODE
-
-
-
-#include <vector>
-#include "Level.h"
-#include "myMath.h"
 #include "ResourceManager.h"
+#include "Level.h"
+#include <assert.h>
+
+/*
 
 
-void Level::ResetScore()
+
+
+
+*/
+
+//Grid Managment
+int EntityGrid::TranslateTo1D(int XVal, int YVal) //Translates 2D coordinates into 1D ones
 	{
-	CurrentScore = 0;
-	RequiredScore = 0;
-	for (int i = 0; i < entities.size(); i++)
+	return (XVal + YVal * XTILECOUNT);
+	}
+
+
+Entity* EntityGrid::GetEntityAtPos(int XIndex, int YIndex, int Layer) //Gets an entity at a position by pointer, by using the layer array on a gridcomponent
+	{
+	return ((GetComponentAtPos(XIndex, YIndex)->Layers[Layer]));
+	}
+
+
+GridComponent* EntityGrid::GetComponentAtPos(int XIndex, int YIndex) //Gets a gridcomponent at a position by pointer
+	{
+	int Index = TranslateTo1D(XIndex, YIndex);
+	GridComponent* ComponentToReturn = &InternalArray[Index];
+	return (ComponentToReturn);
+	}
+
+
+void EntityGrid::SetEntityAtPos(int XIndex, int YIndex, Entity* EntityToSet, int Layer) //Moves an entity to a position
+	{
+	EntityToSet->position.x = XIndex;
+	EntityToSet->position.y = YIndex;
+	InternalArray[TranslateTo1D(XIndex, YIndex)].Layers[Layer] = EntityToSet;
+	}
+
+
+void EntityGrid::ClearEntityAtPos(int XIndex, int YIndex, int Layer) //Sets the entitypointer at an index to nullptr
+	{
+	InternalArray[TranslateTo1D(XIndex, YIndex)].Layers[Layer] = nullptr;
+	}
+
+
+void EntityGrid::SetGridLayerToVector(int Layer, std::vector<Entity>& LevelVector) //Sets all the content of a vector to positions on a layer
+	{
+	for (int i = 0; i < LevelVector.size(); i++)
 		{
-		if (entities[i].entityType == EntityType::SWITCH) { RequiredScore++; }
+		Entity* TempEntity = &LevelVector[i];
+		InternalArray[TranslateTo1D(TempEntity->position.x, TempEntity->position.y)].Layers[Layer] = TempEntity;
+		std::cout << TranslateTo1D(TempEntity->position.x, TempEntity->position.y) << "\n";
 		}
 	}
 
 
-Vector2i Level::CreateMovementVector()
+//Main Logic
+Vector2i Level::CreateMovementVector() //Get controls
 	{
 	int XMVM = IsKeyPressed(KEY_RIGHT) - IsKeyPressed(KEY_LEFT);
 	int YMVM = IsKeyPressed(KEY_DOWN) - IsKeyPressed(KEY_UP);
@@ -34,115 +65,81 @@ Vector2i Level::CreateMovementVector()
 	}
 
 
-bool Level::IsEntityTypeAtPosition(Vector2i Position, EntityType Type)
+void Level::CommitMovement(Vector2i& MovementVector, int& XVal, int& YVal) //Set future position to self then remove current position
 	{
-	for (int i = 1; i < entities.size(); i++)
-		{
-		if (entities[i].position == Position && entities[i].entityType == Type)
-			{
-			return (true);
-			}
-		}
-	return (false);
+	Entity* EntityToSet = LevelGrid.GetEntityAtPos(XVal, YVal, 1);
+	LevelGrid.SetEntityAtPos(XVal + MovementVector.x, YVal + MovementVector.y, EntityToSet, 1);
+	LevelGrid.ClearEntityAtPos(XVal, YVal, 1);
 	}
 
 
-Entity* Level::GetEntityByPosition(Vector2i Position)
+bool Level::MoveEntity(Vector2i& MovementVector, int XVal, int YVal, bool CanPush) //Reference fucks everything up, why? int& XVal
 	{
-	Entity* EntityAtPosition = nullptr;
-
-	for (int i = 1; i < entities.size(); i++)
-		{
-		if (entities[i].position == Position)
-			{
-			EntityAtPosition = &entities[i];
-			break;
-			}
-		}
-
-	return (EntityAtPosition);
-	}
-
-//There is something really jank here. It moves switches instead of boxes depending of where the switch and box is on the map if there is an adjacent wall to either the left or above the box on a switch in question.
-bool Level::MoveBox(Entity* Box, Vector2i MovementVector)
-	{
-	Vector2i FuturePosition = Box->position + MovementVector;
-	Entity* EntityAtPosition = GetEntityByPosition(FuturePosition);
+	Entity* FuturePosEntity = LevelGrid.GetEntityAtPos(XVal + MovementVector.x, YVal + MovementVector.y, 1);
 	
-	if (EntityAtPosition == nullptr) 
-		{ 
-		Box->position = FuturePosition;
+	if (FuturePosEntity == nullptr) //No entity 
+		{
+		CommitMovement(MovementVector, XVal, YVal);
 		return (true);
 		}
-	else
+		
+	if (FuturePosEntity->entityDescription->IsMovable) //Movable entity
 		{
-		switch (EntityAtPosition->entityType)
+		if (CanPush == false) { return (false); }
+
+		if (MoveEntity(MovementVector, FuturePosEntity->position.x, FuturePosEntity->position.y, false))
 			{
-			case (EntityType::WALL):
-			case (EntityType::BOX):
-				{
-				return (false);
-				}
-			case (EntityType::SWITCH): //WIN
-				{
-				if (IsEntityTypeAtPosition(Box->position, EntityType::SWITCH) == false) { CurrentScore++; }
-				Box->position = FuturePosition; 
-				return (true);
-				}
+			StopSoundMulti();
+			PlaySoundMulti(Resources::Sounds[1]); //Boxmove sound
+			CommitMovement(MovementVector, XVal, YVal);
+			return (true);
+			}
+		else { return (false); }
+		}
+
+
+	//Unmovable entity
+	StopSoundMulti();
+	PlaySoundMulti(Resources::Sounds[0]); //Collision sound
+	return (false); 
+	}
+
+
+bool Level::CheckWin() //Check if there is a box above each switch 
+	{
+	for (int i = 0; i < EntetiesLayer0.size(); i++)
+		{
+		Entity TempEntity = EntetiesLayer0[i]; 
+		if (TempEntity.entityDescription->IsSwitch)
+			{
+			Entity* EntityToCheck = LevelGrid.GetEntityAtPos(TempEntity.position.x, TempEntity.position.y, 1);
+			if (EntityToCheck == nullptr) { return (false); }
+			if (EntityToCheck->entityDescription->IsBox == false) { return (false); }
 			}
 		}
-	//throw(101); //Had to comment these out, since they were throwing errors if player was not entities[0] on each level preventing gameplay. Since this is not longer the standard these throws aren't necessary any longer.
+	return (true);
 	}
 
 
-bool Level::ScoutMovement(Vector2i Position, Vector2i MovementVector)
+void Level::Update() //Called each frame, main for logic
 	{
-	Entity* EntityAtPosition = GetEntityByPosition(Position);
+	Vector2i MovementVector = CreateMovementVector();
 
-	if (EntityAtPosition == nullptr) { return(true); }
-	else
+	if ((MovementVector.x != 0) || (MovementVector.y != 0))
 		{
-		switch (EntityAtPosition->entityType)
+		if (MoveEntity(MovementVector, PlayerPosition.x, PlayerPosition.y, true))
 			{
-			case (EntityType::SWITCH):
-				{
-				if (IsEntityTypeAtPosition(Position, EntityType::BOX)) { return (MoveBox(EntityAtPosition, MovementVector)); }
-				else { return (true); }
-				}
-			case (EntityType::WALL):
-				{
-				return (false);
-				}
-			case (EntityType::BOX):
-				{
-				//PlaySound(Resources::Sounds[0]);
-				return (MoveBox(EntityAtPosition, MovementVector));
-				}
+			PlayerPosition += MovementVector;
 			}
-		}
-	//throw(101);
-	}
 
-
-void Level::MovePlayer(Vector2i MovementVector)
-	{
-	//I added this code to make sure that it goes throught he vector of entities in a level and only tries to move the one that is the player. It itirates through the list until it has a player for that level and moves only that one. Unfortunately this happens every time you move, so it isn't operation-efficient. This was an ugly fix to get the ball rolling. Sorry Johnathan!!
-	//
-	int i = 0;
-	for (; i < Level::entities.size(); i++)
-	{
-		if (Level::entities[i].IsPlayer == true)
-		{
-			break;
+		Win = CheckWin(); 
 		}
 	}
-	//
-	Vector2i FutureMovement = entities[i].position + MovementVector;
-	if (ScoutMovement(FutureMovement, MovementVector)) { entities[i].position = FutureMovement; }
-	}
 
 
-void Level::update()
+void Level::ResetLevel() //Called at each instansiation of level
 	{
-		MovePlayer(CreateMovementVector());
-	}*/
+	Win = false;
+	LevelGrid.SetGridLayerToVector(0, EntetiesLayer0); 
+	LevelGrid.SetGridLayerToVector(1, EntetiesLayer1);
+	}

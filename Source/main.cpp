@@ -10,7 +10,7 @@
 
 /*  TODO
 MOVING BOOL DEFS TO AADI
-CLEANUP & SOUND
+CLEANUP & SOUND /J
 UNLOADING OF RESOURCES #DONE
 IMPLEMTATION OF SOUND
 README
@@ -46,6 +46,7 @@ int main(void)
 
 	//UNLOAD RESOURCES
 	Resources::UnloadResources();
+	CloseAudioDevice();
 
 	CloseWindow(); // Close window and OpenGL context
 	return 0;
